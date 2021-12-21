@@ -1,0 +1,28 @@
+Google :  V8 Engine - Open Source (C/C++)
+
+    Execution Env. for JS 
+
+NodeJS : modified version of V8 Engine
+
+ES6, ES7 : React
+Typescript  : Angular
+
+React
+Angular
+
+******************************************
+
+                        Student
+                                roll,name,age
+
+                CS                       IT   
+                  marks:                   marks:     
+                  {                         { 
+
+                  }                         }   
+
+        Array of 10 Object (CS/IT)
+
+        create a function to filter out object inside this Array        
+                argument is 55                  
+
