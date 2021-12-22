@@ -1,0 +1,64 @@
+ReactJS(facebook) , Angular(google) , VUE
+
+ReactJS is a client-side javascript library for making Component based UI.
+
+    Component : HTML , CSS , Javascript
+
+Option 1
+       Step 1 :  Install the module
+               npm install -g create-react-app    
+
+       Step 2 : Create new react project 
+                create-react-app web22dec
+
+Option 2:
+    Create new react project 
+        npx create-react-app web22dec
+*********************************************************************
+
+Babel : Transpiler
+
+    ES6,ES7...      Babel           ES5
+
+Webpack : Development Server    
+
+                          project
+
+                        Main Component(app)
+
+            Sub1     Sub2        Sub3        Sub4        Sub5
+
+           S1   S2              S3   S4 
+***************************************************
+
+    DOM : Document Object Model
+
+    Component : 1. Class Component  
+                2. Function Component
+
+        JSX : JavaScript Extension    
+
+************************************************
+    State Component
+    Data Binding :  One-Way  
+                var num = 100;
+
+                <b>{num}</b>
+
+    Actual DOM
+                         
+                         Change State
+
+        Virtual DOM                
+
+
+
+
+
+
+
+
+
+
+
+
