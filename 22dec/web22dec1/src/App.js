@@ -12,7 +12,8 @@ class App extends React.Component
           {empid:102 , name : 'meena' , age : 31 , 
           email : "meena@gmail.com", salary : 41000 , bonus : 450},
         ],
-        duplicateIdStatus : false
+        duplicateStatus : false,
+        duplicateMessage : ""
       }
     }
 
@@ -27,10 +28,14 @@ class App extends React.Component
       this.setState({employees : [...this.state.employees,ob]})
     }
 
-    checkEmpId = ()=>{
-        var empid = this.idbox.value*1;
-        var status = this.state.employees.find((emp)=>emp.empid==empid)!=undefined;        
-        this.setState({duplicateIdStatus:status})
+    checkUniqueValue = (event)=>{
+        var data = event.target.value
+        var id = event.target.id
+        //console.log(data,id)
+        var status = this.state.employees.find((emp)=>emp[id]==data)!=undefined;        
+
+        var msg = `Duplicate Value found in ${id} !`
+        this.setState({duplicateStatus:status,duplicateMessage:msg})
     }
 
     render()
@@ -38,19 +43,24 @@ class App extends React.Component
       return <div>
           <h1>Employee Records</h1>   
 
-          <input type='text' ref={c=>this.idbox=c} 
-          onBlur={this.checkEmpId}
-          onFocus={()=>this.setState({duplicateIdStatus:false})}
+          <input type='text' id="empid" ref={c=>this.idbox=c} 
+          onBlur={this.checkUniqueValue}
+          onFocus={()=>this.setState({duplicateStatus:false,duplicateMessage:''})}
           placeholder='Employee ID'/>&nbsp;
 
           <input type='text' ref={c=>this.namebox=c} placeholder='Employee Name'/>&nbsp;
           <input type='number' ref={c=>this.agebox=c} placeholder='Employee Age'/>&nbsp;
-          <input type='email' ref={c=>this.emailbox=c} placeholder='Employee Email'/>&nbsp;
+
+          <input type='email' id="email" ref={c=>this.emailbox=c} 
+          onBlur={this.checkUniqueValue}
+          onFocus={()=>this.setState({duplicateStatus:false,duplicateMessage:''})}
+          placeholder='Employee Email'/>&nbsp;
+
           <input type='number' ref={c=>this.salbox=c} placeholder='Employee Salary'/>&nbsp;
           <input type='number' ref={c=>this.bonusbox=c} placeholder='Employee Bonus'/>&nbsp;
           <br/><br/>
 
-          {this.state.duplicateIdStatus?<b style={{color:"red"}}>"Employee is Already Exist"</b>:<button onClick={this.addEmp}>Add Employee</button>}
+          {this.state.duplicateStatus?<b style={{color:"red"}}>{this.state.duplicateMessage}</b>:<button onClick={this.addEmp}>Add Employee</button>}
           
 
           <hr/>
@@ -66,6 +76,9 @@ class App extends React.Component
               <th>Salary</th>
               <th>Bonus</th>
               <th>Total Salary</th>
+              <th>
+                Operation
+              </th>
             </tr>
             </thead>
             <tbody>
@@ -80,6 +93,9 @@ class App extends React.Component
                 <td>{emp.salary}</td>
                 <td>{emp.bonus}</td>
                 <td>{emp.salary+emp.bonus}</td>
+                <td>
+                  <button>Delete</button>
+                </td>
               </tr>
             })}
             </tbody>
