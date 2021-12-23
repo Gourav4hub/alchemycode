@@ -1,0 +1,42 @@
+Group 3 : DealsBazaar
+
+	User : Seller / Purchase 
+		Search Product : category : sub:cate
+	User Module : 
+		Products Module	: Images...
+		Deal Request  : Rate , Qty......
+
+Group 6 : EMarket : Electronics
+
+	Admin : 
+		Visit , Search , Cart , Wishlist , Purchase
+
+Group 5 : FriendsHub
+
+Group 4 : ChatBuddy
+
+	Users , Groups , Search Groups , ReqG , Chat.... , 
+
+Group 1 : Quickr
+
+Group 2 : Medico
+	User :  Hospital / Patient
+		   Patient
+			VisitEntry
+				VisitTest	
+			Blood
+
+Group 7 : CollegeQuera
+	      1			      	2				3
+	Qus >> Students		Files(branchwise+yearwise)	    Messages	
+		branchwise
+	Ans >> Faculty
+
+	
+
+		
+
+
+
+	
+
