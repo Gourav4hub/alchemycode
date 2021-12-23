@@ -2,17 +2,48 @@ import React from 'react'
 
 export default class About extends React.Component
 {
+    constructor()
+    {
+      super()
+      console.log("About Component Constructor ...... ")
+      this.state = {
+        msg : 'How Can I Help You?'
+      }
+    }
+
+    componentDidMount()
+    {
+      console.log("About Component Did Mount ...... ")
+    }
+
+    componentWillUnmount()
+    {
+      console.log("About Component Will UnMount ...... ")
+    }
+
+    shouldComponentUpdate(newProps,newState)
+    {
+      console.log("NewState : " , newState)
+      console.log("NewProps : " , newProps)
+      return true
+    }
+
+    componentDidUpdate(prevProps,prevState)
+    {     
+      console.log("About Component Did Update ...... ")
+      console.log("PreState : " , prevState)
+      console.log("PreProps : " , prevProps)
+    }
+
     render()
     {
+        console.log("About Component Render ...... ")
         return <section className="section about-me" data-section="section1">
         <div className="container">
           <div className="section-heading">
-            <h2>About Me</h2>
+            <h2>About Us</h2>
             <div className="line-dec"></div>
-            <span
-              >This is a Bootstrap v4.2.1 CSS Template for you. Edit and use
-              this layout for your site. Updated on 21 May 2019 for repeated main menu HTML code.</span
-            >
+            <b>{this.state.msg}</b>
           </div>
           <div className="left-image-post">
             <div className="row">
@@ -32,7 +63,7 @@ export default class About extends React.Component
                     libero.
                   </p>
                   <div className="white-button">
-                    <a href="#">Read More</a>
+                    <button onClick={()=>this.setState({msg:'May I Help U?'})}>Read More</button>
                   </div>
                 </div>
               </div>
