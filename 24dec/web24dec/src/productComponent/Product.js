@@ -37,7 +37,8 @@ function Product(props)
     return <div className='Product'>
 
         <div className='row'>
-            <div className='col-lg-3 text-center filterdiv'> 
+            <div className='col-lg-1'></div>
+            <div className='col-lg-2 filterdiv'> 
                 <h2>All Category</h2>               
                 <hr/>
                     <h5 onClick={fetchCategory}>All</h5> <br/>
@@ -54,11 +55,11 @@ function Product(props)
                 <h2>Price : <span style={{color:'red'}}>{priceRange}</span></h2>  
                 <h4>Min: {priceMinMax.min} &nbsp; Max : {priceMinMax.max}</h4>             
                 <hr/> 
-                <input type="range"  
+                <input type="range" className='form-control' 
                 onChange={(event)=>setPriceRange(event.target.value)} value={priceRange} 
                 min={priceMinMax.min} max={priceMinMax.max}/>   
             </div>
-            <div className='col-lg-9'>
+            <div className='col-lg-8'>
                 <table className='table table-hovered'>
                     <thead>
                         <tr>
@@ -85,13 +86,15 @@ function Product(props)
                                     data-id={prod.pid}
                                     className='btn btn-success'>Add Cart</button> */}
 
-            <button onClick={()=>props.addProductToCart(prod.pid,true)}  className='btn btn-success'>Add Cart</button>
+            <button onClick={()=>props.addProductToCart(prod.pid,true)} 
+             className='btn-lg btn-success'>Add Cart</button>
                                 </th>
                             </tr>
                         })}
                     </tbody>
                 </table>
             </div>
+            <div className='col-lg-1'></div>
         </div>
 
 

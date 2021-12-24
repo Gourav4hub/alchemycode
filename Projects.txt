@@ -6,18 +6,27 @@ Group 3 : DealsBazaar
 		Products Module	: Images...
 		Deal Request  : Rate , Qty......
 
+>>> 27dec : User (Registeration API) : Request JSON : Response JSON
+		  Login API
+
 Group 6 : EMarket : Electronics
 
 	Admin : 
 		Visit , Search , Cart , Wishlist , Purchase
+>>> 27dec : ...
 
 Group 5 : FriendsHub
+
+>>> 27dec : 
 
 Group 4 : ChatBuddy
 
 	Users , Groups , Search Groups , ReqG , Chat.... , 
 
+>>> 27dec : 
+
 Group 1 : Quickr
+>>> 27dec : 
 
 Group 2 : Medico
 	User :  Hospital / Patient
@@ -25,6 +34,7 @@ Group 2 : Medico
 			VisitEntry
 				VisitTest	
 			Blood
+>>> 27dec : 
 
 Group 7 : CollegeQuera
 	      1			      	2				3
@@ -32,7 +42,7 @@ Group 7 : CollegeQuera
 		branchwise
 	Ans >> Faculty
 
-	
+>>> 27dec : 	
 
 		
 
