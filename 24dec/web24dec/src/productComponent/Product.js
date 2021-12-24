@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './Product.css'
 import DummyData from '../ProductData'
 
-function Product() 
+function Product(props) 
 {
     const [products, setProducts] = useState(DummyData)
 
@@ -12,10 +12,12 @@ function Product()
         setProducts(DummyData.filter(prod=>category=='all'?true:prod.category==category))
     }
 
-    const addCart = (event)=>
-    {
-        var pid = event.target.getAttribute('data-id');        
-    }
+    // const addCart = (event)=>
+    // {
+    //     var pid = event.target.getAttribute('data-id');     
+    //     props.addProductToCart(pid)   
+    // }
+
     return <div className='Product'>
 
         <div className='row'>
@@ -50,9 +52,11 @@ function Product()
                                 <td>{prod.price}</td>
                                 <td>{prod.discount}</td>
                                 <th>
-                                    <button onClick={addCart} 
+                                    {/* <button onClick={addCart} 
                                     data-id={prod.pid}
-                                    className='btn btn-success'>Add Cart</button>
+                                    className='btn btn-success'>Add Cart</button> */}
+
+            <button onClick={()=>props.addProductToCart(prod.pid)}  className='btn btn-success'>Add Cart</button>
                                 </th>
                             </tr>
                         })}
