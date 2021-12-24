@@ -5,6 +5,7 @@ import DummyData from '../ProductData'
 function Product(props) 
 {
     const [products, setProducts] = useState(DummyData)
+    const [priceRange,setPriceRange] = useState(0)
 
     const fetchCategory = (event)=>
     {
@@ -27,7 +28,15 @@ function Product(props)
                     <h5 onClick={fetchCategory}>All</h5> <br/>
                     <h5 onClick={fetchCategory}>TV</h5> <br/>
                     <h5 onClick={fetchCategory}>AC</h5><br/>
-                    <h5 onClick={fetchCategory}>Fan</h5>    <br/>            
+                    <h5 onClick={fetchCategory}>Fan</h5>    <br/>   
+                
+                <h2>Company</h2>               
+                <hr/>    
+
+                <h2>Price : <span style={{color:'red'}}>{priceRange}</span></h2>               
+                <hr/> 
+                <input type="range"  
+                onChange={(event)=>setPriceRange(event.target.value)} value={priceRange} min={0} max={100}/>   
             </div>
             <div className='col-lg-9'>
                 <table className='table table-hovered'>
@@ -56,7 +65,7 @@ function Product(props)
                                     data-id={prod.pid}
                                     className='btn btn-success'>Add Cart</button> */}
 
-            <button onClick={()=>props.addProductToCart(prod.pid)}  className='btn btn-success'>Add Cart</button>
+            <button onClick={()=>props.addProductToCart(prod.pid,true)}  className='btn btn-success'>Add Cart</button>
                                 </th>
                             </tr>
                         })}

@@ -7,23 +7,28 @@ function App()
   const [carts,setCart]  = useState([])
   const [isCartVisible,setIsCartVisible] = useState(false)
 
-  const addProductToCart = (pid)=>
-  {
-    var product = DummyData.find(ob=>ob.pid==pid)
-    if(product!=undefined)
-    {       
-       var cartItem = carts.find(ct=>ct.pid==pid)
-       if(cartItem==undefined)
-          setCart([...carts,{ ...product , qty:1}])
-       else       
-          setCart(carts.map(ct=>ct==cartItem?{...ct,qty:ct.qty+1}:ct))      
-    }   
+  const addProductToCart = (pid,isIncrement)=>
+  {   
+      var product = DummyData.find(ob=>ob.pid==pid)
+      if(product!=undefined)
+      {       
+        var cartItem = carts.find(ct=>ct.pid==pid)
+        if(cartItem==undefined)
+            setCart([...carts,{ ...product , qty:1}])
+        else
+        {       
+            if(cartItem.qty==1 && !isIncrement)            
+              deleteCart(pid)
+            else
+              setCart(carts.map(ct=>ct==cartItem?{...ct,qty:isIncrement?ct.qty+1:ct.qty-1}:ct))             
+        }
+      }      
   }
 
   const deleteCart = (pid)=>{
     setCart(carts.filter(ct=>ct.pid!=pid))
   }
-  
+
   return <div className='App'>
     <h1>My Shopping Cart</h1>
     <h4 style={{color:'red',textAlign:'right'}}>
@@ -59,9 +64,9 @@ function App()
                                 <th>
                                   <button onClick={()=>deleteCart(prod.pid)} className='btn btn-danger'>Delete</button>
                                   <br/><br/>
-                                  <button className='btn btn-info'>-</button>
+                                  <button onClick={()=>addProductToCart(prod.pid,false)} className='btn btn-info'>-</button>
                                   &nbsp;
-                                  <button className='btn btn-info'>+</button>
+                                  <button onClick={()=>addProductToCart(prod.pid,true)} className='btn btn-info'>+</button>
                                 </th>
                     </tr>
           })}
