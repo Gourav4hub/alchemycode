@@ -6,11 +6,26 @@ function Product(props)
 {
     const [products, setProducts] = useState(DummyData)
     const [priceRange,setPriceRange] = useState(0)
+   
+    const [companies,setCompanies] = useState([...new Set(DummyData.map(ob=>ob.company))])
+
+    var arr = DummyData.map(ob=>ob.price)
+    const [priceMinMax,setPriceMinMax] = useState({
+        min : Math.min(...arr),
+        max : Math.max(...arr)
+    })
 
     const fetchCategory = (event)=>
     {
         var category = event.target.innerHTML.toLowerCase()
-        setProducts(DummyData.filter(prod=>category=='all'?true:prod.category==category))
+        var filterData = DummyData.filter(prod=>category=='all'?true:prod.category==category)
+        setProducts(filterData)
+        setCompanies([...new Set(filterData.map(ob=>ob.company))])
+        var prices = filterData.map(ob=>ob.price)
+        setPriceMinMax({
+            min : Math.min(...prices),
+            max : Math.max(...prices)
+        })
     }
 
     // const addCart = (event)=>
@@ -30,13 +45,18 @@ function Product(props)
                     <h5 onClick={fetchCategory}>AC</h5><br/>
                     <h5 onClick={fetchCategory}>Fan</h5>    <br/>   
                 
-                <h2>Company</h2>               
+                <h2>Company</h2>  
+                {companies.map(com=>{
+                    return <h5>{com}</h5>
+                })}             
                 <hr/>    
 
-                <h2>Price : <span style={{color:'red'}}>{priceRange}</span></h2>               
+                <h2>Price : <span style={{color:'red'}}>{priceRange}</span></h2>  
+                <h4>Min: {priceMinMax.min} &nbsp; Max : {priceMinMax.max}</h4>             
                 <hr/> 
                 <input type="range"  
-                onChange={(event)=>setPriceRange(event.target.value)} value={priceRange} min={0} max={100}/>   
+                onChange={(event)=>setPriceRange(event.target.value)} value={priceRange} 
+                min={priceMinMax.min} max={priceMinMax.max}/>   
             </div>
             <div className='col-lg-9'>
                 <table className='table table-hovered'>
