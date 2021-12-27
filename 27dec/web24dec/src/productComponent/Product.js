@@ -1,12 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './Product.css'
 import DummyData from '../ProductData'
 import Store from '../Store'
 import { ACTION_ADD_CART } from '../actions/CartAction'
 import CartOption from '../cartComponent/CartOption'
+
+import {ACTION_FILTER_CHANGE} from '../actions/FilterAction'
+
 import { connect } from 'react-redux'
 var mapStateToProps = state => {
-    return { carts : state.carts }
+    return { carts : state.carts , filter : state.filter}
 }
 
 function Product(props) 
@@ -22,10 +25,9 @@ function Product(props)
         max : Math.max(...arr)
     })
 
-    const fetchCategory = (event)=>
+    const filterProducts = ()=>
     {
-        var category = event.target.innerHTML.toLowerCase()
-        var filterData = DummyData.filter(prod=>category=='all'?true:prod.category==category)
+        var filterData = DummyData.filter(prod=>props.filter.category=='all'?true:prod.category==props.filter.category)
         setProducts(filterData)
         setCompanies([...new Set(filterData.map(ob=>ob.company))])
         var prices = filterData.map(ob=>ob.price)
@@ -33,6 +35,18 @@ function Product(props)
             min : Math.min(...prices),
             max : Math.max(...prices)
         })
+    }
+
+    const fetchCategory = (event)=>
+    {
+        var category = event.target.innerHTML.toLowerCase()
+        Store.dispatch({...ACTION_FILTER_CHANGE,payload:{
+            filter : {
+                category : category,
+                company : undefined,
+                price : undefined
+            }
+        }})
     }
 
     var addCart = (prod)=>
@@ -54,6 +68,10 @@ function Product(props)
             return <CartOption qty={ob.qty} cartid={ob.cartid}/>
     }
 
+    useEffect(()=>{
+        filterProducts()
+    })
+
     return <div className='Product'>
 
         <div className='row'>
@@ -67,8 +85,8 @@ function Product(props)
                     <h5 onClick={fetchCategory}>Fan</h5>    <br/>   
                 
                 <h2>Company</h2>  
-                {companies.map(com=>{
-                    return <h5>{com}</h5>
+                {companies.map((com,index)=>{
+                    return <h5 key={index}>{com}</h5>
                 })}             
                 <hr/>    
 
@@ -94,7 +112,7 @@ function Product(props)
                     </thead>
                     <tbody>
                         {products.map((prod, index) => {
-                            return <tr>
+                            return <tr key={index}>
                                 <td>{index + 1}</td>
                                 <td><img src={prod.image} /></td>
                                 <td>{prod.name}</td>
