@@ -1,4 +1,5 @@
 import { connect } from 'react-redux'
+import CartOption from './CartOption'
 
 var mapStateToProps = state => {
     return { carts : state.carts }
@@ -32,11 +33,7 @@ function Cart(props)
                               <td>{prod.qty}</td>
                               <td>{(prod.price*prod.qty)-(prod.discount*prod.qty)}</td>
                               <th>
-                                {/* <button onClick={()=>deleteCart(prod.pid)} className='btn btn-danger'>Delete</button>
-                                <br/><br/>
-                                <button onClick={()=>addProductToCart(prod.pid,false)} className='btn btn-info'>-</button>
-                                &nbsp;
-                                <button onClick={()=>addProductToCart(prod.pid,true)} className='btn btn-info'>+</button> */}
+                                <CartOption qty={prod.qty} cartid={prod.cartid}/>
                               </th>
                   </tr>
         })}

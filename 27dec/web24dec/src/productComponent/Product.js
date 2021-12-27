@@ -3,7 +3,7 @@ import './Product.css'
 import DummyData from '../ProductData'
 import Store from '../Store'
 import { ACTION_ADD_CART } from '../actions/CartAction'
-
+import CartOption from '../cartComponent/CartOption'
 import { connect } from 'react-redux'
 var mapStateToProps = state => {
     return { carts : state.carts }
@@ -42,6 +42,16 @@ function Product(props)
             Store.dispatch({...ACTION_ADD_CART,payload:{
                 product : prod
             }})
+    }
+
+    var setupCartOptions = (prod)=>
+    {
+        var ob = props.carts.find(ob=>ob.pid==prod.pid);
+        if(ob==undefined)
+            return <button className='btn-lg btn-success' 
+            onClick={()=>addCart(prod)}>Add Cart</button>
+        else    
+            return <CartOption qty={ob.qty} cartid={ob.cartid}/>
     }
 
     return <div className='Product'>
@@ -92,11 +102,7 @@ function Product(props)
                                 <td>{prod.price}</td>
                                 <td>{prod.discount}</td>
                                 <th>
-
-                         {props.carts.find(ob=>ob.pid==prod.pid)==undefined?   
-                <button onClick={()=>addCart(prod)} 
-             className='btn-lg btn-success'>Add Cart</button>:<b>Already Added</b>}
-
+                                    {setupCartOptions(prod)}
                                 </th>
                             </tr>
                         })}
