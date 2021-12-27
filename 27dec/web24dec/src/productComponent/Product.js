@@ -27,10 +27,28 @@ function Product(props)
 
     const filterProducts = ()=>
     {
-        var filterData = DummyData.filter(prod=>props.filter.category=='all'?true:prod.category==props.filter.category)
+        // priceRange
+        console.log(props.filter)
+
+        var filterData = DummyData.filter(prod=>{
+            if(props.filter.category=='all' || props.filter.category==undefined)
+                return true
+            else    
+                if(prod.category==props.filter.category)                    
+                    if(props.filter.company==undefined)
+                        return true
+                    else
+                        if(prod.company==props.filter.company)
+                            return true
+                        else
+                            return false    
+                else
+                    return false                    
+        })
+        
         setProducts(filterData)
-        setCompanies([...new Set(filterData.map(ob=>ob.company))])
-        var prices = filterData.map(ob=>ob.price)
+        setCompanies([...new Set(DummyData.map(ob=>ob.company))])
+        var prices = DummyData.map(ob=>ob.price)
         setPriceMinMax({
             min : Math.min(...prices),
             max : Math.max(...prices)
@@ -42,9 +60,18 @@ function Product(props)
         var category = event.target.innerHTML.toLowerCase()
         Store.dispatch({...ACTION_FILTER_CHANGE,payload:{
             filter : {
-                category : category,
-                company : undefined,
-                price : undefined
+                ...props.filter,
+                category : category,               
+            }
+        }})
+    }
+    const fetchCompany = (event)=>
+    {
+        var company = event.target.innerHTML
+        Store.dispatch({...ACTION_FILTER_CHANGE,payload:{
+            filter : {
+                ...props.filter,
+                company : company,               
             }
         }})
     }
@@ -70,7 +97,7 @@ function Product(props)
 
     useEffect(()=>{
         filterProducts()
-    })
+    },[props.filter])
 
     return <div className='Product'>
 
@@ -86,7 +113,7 @@ function Product(props)
                 
                 <h2>Company</h2>  
                 {companies.map((com,index)=>{
-                    return <h5 key={index}>{com}</h5>
+                    return <h5 key={index} onClick={fetchCompany}>{com}</h5>
                 })}             
                 <hr/>    
 
