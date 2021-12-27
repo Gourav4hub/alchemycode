@@ -4,9 +4,10 @@ import Login from './loginComponent/Login'
 import Menu from './menuComponent/Menu'
 import Product from './productComponent/Product'
 import DummyData from './ProductData'
-import {Routes,Route} from 'react-router-dom'
+import {Routes,Route, Link} from 'react-router-dom'
 //import Store from './Store'
 import { connect } from 'react-redux'
+import Cart from './cartComponent/Cart'
 
 var mapStateToProps = state => {
     return { carts : state.carts }
@@ -14,10 +15,7 @@ var mapStateToProps = state => {
 
 
 function App(props)
-{      
-  const [isCartVisible,setIsCartVisible] = useState(false)
-
-
+{  
   // const addProductToCart = (pid,isIncrement)=>
   // {   
   //     var product = DummyData.find(ob=>ob.pid==pid)
@@ -49,57 +47,20 @@ function App(props)
       </div>
       <div className='col-lg-6'>
         <h4 style={{color:'red',textAlign:'right'}}>
-            <span onClick={()=>setIsCartVisible(true)}> Cart : {props.carts.reduce((x,ob)=>ob.qty+x,0)} &nbsp;&nbsp;&nbsp; </span>
+            <Link to="/mycart"><span>Cart : {props.carts.reduce((x,ob)=>ob.qty+x,0)} &nbsp;&nbsp;</span></Link>
         </h4>  
       </div>
     </div>
     
 
-    <div style={{display:isCartVisible?"block":"none"}}>
-      <h3>Cart Details</h3>
-      <table className='table table-striped'>
-        <thead>
-          <tr>
-                            <th>S.No.</th>
-                            <th>Image</th>
-                            <th>Product Name</th>                           
-                            <th>Price</th>
-                            <th>Discount</th>
-                            <th>Quantity</th>
-                            <th>Total Price</th>
-                            <th>Operation</th>
-          </tr>
-        </thead>
-        <tbody>
-          {props.carts.map((prod, index)=>
-          {
-            return <tr>
-                                <td>{index + 1}</td>
-                                <td><img src={prod.image} /></td>
-                                <td>{prod.name}</td>
-                                <td>{prod.price}</td>
-                                <td>{prod.discount}</td>
-                                <td>{prod.qty}</td>
-                                <td>{(prod.price*prod.qty)-(prod.discount*prod.qty)}</td>
-                                <th>
-                                  {/* <button onClick={()=>deleteCart(prod.pid)} className='btn btn-danger'>Delete</button>
-                                  <br/><br/>
-                                  <button onClick={()=>addProductToCart(prod.pid,false)} className='btn btn-info'>-</button>
-                                  &nbsp;
-                                  <button onClick={()=>addProductToCart(prod.pid,true)} className='btn btn-info'>+</button> */}
-                                </th>
-                    </tr>
-          })}
-        </tbody>
-      </table>
-      <button className='btn btn-primary'  onClick={()=>setIsCartVisible(false)}>Close</button>
-    </div>
+   
 
     <hr/>
 
     <Routes>
       <Route path="/" element={<Login/>}/>
       <Route path="/products" element={<Product/>}/>
+      <Route path="/mycart" element={<Cart/>}/>
     </Routes>
   </div>
 }

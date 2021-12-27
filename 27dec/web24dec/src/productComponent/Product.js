@@ -92,8 +92,11 @@ function Product(props)
                                 <td>{prod.price}</td>
                                 <td>{prod.discount}</td>
                                 <th>
+
+                         {props.carts.find(ob=>ob.pid==prod.pid)==undefined?   
                 <button onClick={()=>addCart(prod)} 
-             className='btn-lg btn-success'>Add Cart</button>
+             className='btn-lg btn-success'>Add Cart</button>:<b>Already Added</b>}
+
                                 </th>
                             </tr>
                         })}
