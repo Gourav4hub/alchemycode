@@ -1,0 +1,20 @@
+.Product
+{
+    font-size: 20px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.Product img
+{
+    border-radius: 10%;
+}
+
+.Product .filterdiv h5
+{
+    cursor: pointer;
+}
+
+.Product .filterdiv h5:hover
+{
+    color:red;
+}
