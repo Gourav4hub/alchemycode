@@ -5,32 +5,40 @@ import Menu from './menuComponent/Menu'
 import Product from './productComponent/Product'
 import DummyData from './ProductData'
 import {Routes,Route} from 'react-router-dom'
-function App()
-{        
-  const [carts,setCart]  = useState([])
+//import Store from './Store'
+import { connect } from 'react-redux'
+
+var mapStateToProps = state => {
+    return { carts : state.carts }
+}
+
+
+function App(props)
+{      
   const [isCartVisible,setIsCartVisible] = useState(false)
 
-  const addProductToCart = (pid,isIncrement)=>
-  {   
-      var product = DummyData.find(ob=>ob.pid==pid)
-      if(product!=undefined)
-      {       
-        var cartItem = carts.find(ct=>ct.pid==pid)
-        if(cartItem==undefined)
-            setCart([...carts,{ ...product , qty:1}])
-        else
-        {       
-            if(cartItem.qty==1 && !isIncrement)            
-              deleteCart(pid)
-            else
-              setCart(carts.map(ct=>ct==cartItem?{...ct,qty:isIncrement?ct.qty+1:ct.qty-1}:ct))             
-        }
-      }      
-  }
 
-  const deleteCart = (pid)=>{
-    setCart(carts.filter(ct=>ct.pid!=pid))
-  }
+  // const addProductToCart = (pid,isIncrement)=>
+  // {   
+  //     var product = DummyData.find(ob=>ob.pid==pid)
+  //     if(product!=undefined)
+  //     {       
+  //       var cartItem = carts.find(ct=>ct.pid==pid)
+  //       if(cartItem==undefined)
+  //           setCart([...carts,{ ...product , qty:1}])
+  //       else
+  //       {       
+  //           if(cartItem.qty==1 && !isIncrement)            
+  //             deleteCart(pid)
+  //           else
+  //             setCart(carts.map(ct=>ct==cartItem?{...ct,qty:isIncrement?ct.qty+1:ct.qty-1}:ct))             
+  //       }
+  //     }      
+  // }
+
+  // const deleteCart = (pid)=>{
+  //   setCart(carts.filter(ct=>ct.pid!=pid))
+  // }
 
   return <div className='App'>
     <h1>My Shopping Cart</h1>
@@ -41,7 +49,7 @@ function App()
       </div>
       <div className='col-lg-6'>
         <h4 style={{color:'red',textAlign:'right'}}>
-            <span onClick={()=>setIsCartVisible(true)}> Cart : {carts.reduce((x,ob)=>ob.qty+x,0)} &nbsp;&nbsp;&nbsp; </span>
+            <span onClick={()=>setIsCartVisible(true)}> Cart : {props.carts.reduce((x,ob)=>ob.qty+x,0)} &nbsp;&nbsp;&nbsp; </span>
         </h4>  
       </div>
     </div>
@@ -63,7 +71,7 @@ function App()
           </tr>
         </thead>
         <tbody>
-          {carts.map((prod, index)=>
+          {props.carts.map((prod, index)=>
           {
             return <tr>
                                 <td>{index + 1}</td>
@@ -74,11 +82,11 @@ function App()
                                 <td>{prod.qty}</td>
                                 <td>{(prod.price*prod.qty)-(prod.discount*prod.qty)}</td>
                                 <th>
-                                  <button onClick={()=>deleteCart(prod.pid)} className='btn btn-danger'>Delete</button>
+                                  {/* <button onClick={()=>deleteCart(prod.pid)} className='btn btn-danger'>Delete</button>
                                   <br/><br/>
                                   <button onClick={()=>addProductToCart(prod.pid,false)} className='btn btn-info'>-</button>
                                   &nbsp;
-                                  <button onClick={()=>addProductToCart(prod.pid,true)} className='btn btn-info'>+</button>
+                                  <button onClick={()=>addProductToCart(prod.pid,true)} className='btn btn-info'>+</button> */}
                                 </th>
                     </tr>
           })}
@@ -91,8 +99,8 @@ function App()
 
     <Routes>
       <Route path="/" element={<Login/>}/>
-      <Route path="/products" element={<Product addProductToCart={addProductToCart}/>}/>
+      <Route path="/products" element={<Product/>}/>
     </Routes>
   </div>
 }
-export default App
+export default connect(mapStateToProps)(App)

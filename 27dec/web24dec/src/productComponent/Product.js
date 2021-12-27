@@ -1,6 +1,13 @@
 import { useState } from 'react'
 import './Product.css'
 import DummyData from '../ProductData'
+import Store from '../Store'
+import { ACTION_ADD_CART } from '../actions/CartAction'
+
+import { connect } from 'react-redux'
+var mapStateToProps = state => {
+    return { carts : state.carts }
+}
 
 function Product(props) 
 {
@@ -28,11 +35,14 @@ function Product(props)
         })
     }
 
-    // const addCart = (event)=>
-    // {
-    //     var pid = event.target.getAttribute('data-id');     
-    //     props.addProductToCart(pid)   
-    // }
+    var addCart = (prod)=>
+    {
+        var cartItem = props.carts.find(ct=>ct.pid==prod.pid)
+        if(cartItem==undefined) // Action_ADD_Cart
+            Store.dispatch({...ACTION_ADD_CART,payload:{
+                product : prod
+            }})
+    }
 
     return <div className='Product'>
 
@@ -82,11 +92,7 @@ function Product(props)
                                 <td>{prod.price}</td>
                                 <td>{prod.discount}</td>
                                 <th>
-                                    {/* <button onClick={addCart} 
-                                    data-id={prod.pid}
-                                    className='btn btn-success'>Add Cart</button> */}
-
-            <button onClick={()=>props.addProductToCart(prod.pid,true)} 
+                <button onClick={()=>addCart(prod)} 
              className='btn-lg btn-success'>Add Cart</button>
                                 </th>
                             </tr>
@@ -96,8 +102,6 @@ function Product(props)
             </div>
             <div className='col-lg-1'></div>
         </div>
-
-
     </div>
 }
-export default Product
+export default connect(mapStateToProps)(Product)
