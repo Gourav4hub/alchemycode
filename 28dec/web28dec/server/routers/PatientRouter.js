@@ -7,8 +7,9 @@ const router = express.Router()
 router.post("/savepatient",(request,response)=>
 {
     var data = request.body;
+    console.log(data)
     patientModel.savePatient(data,(result,patient)=>{
-        //console.log(result)
+        console.log(result)
         response.json({status:result,patient:patient})
     })
 })

@@ -8,32 +8,42 @@ class Patient
         age: Number,
         gender: String
       });
-    model = mongoose.model("patient",this.patientSchema,"patient");      
+          
 
-    savePatient = (data,callback)=>{
-        mongooseConnection(response=>{
-            //console.log(response)
-            
-            var ob = new this.model(data)
-            ob.save(function (err,patient) {
-                console.log(patient)
-                if (err) 
-                    callback(false)
-                else    
-                    callback(true,patient)
-              });
+    savePatient = (data,callback)=>
+    {
+        var model = mongoose.model("patient",this.patientSchema,"patient");
+        mongooseConnection(conn=>{
+            conn.once('open', function() 
+            {
+                var ob = new model(data)
+                ob.save(function (err,patient) {
+                    console.log(patient)
+                    conn.close()
+                    if (err) 
+                        callback(false)
+                    else    
+                        callback(true,patient)
+                  });
+            });
         })
     }
 
-    fetchPatients = (callback)=>{
-        mongooseConnection(response=>{
-            var obj = this.model.find({})
-            obj.exec((err,data)=>{
-                if(err)
-                    callback([])
-                else
-                    callback(data)    
-            })
+    fetchPatients = (callback)=>
+    {
+        var model = mongoose.model("patient",this.patientSchema,"patient");
+        mongooseConnection(conn=>{
+            conn.once('open', function() 
+            {
+                var obj = model.find({})
+                obj.exec((err,data)=>{
+                    conn.close()
+                    if(err)
+                        callback([])
+                    else
+                        callback(data) 
+                });
+             })
         })
     }
 }
