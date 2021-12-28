@@ -31,7 +31,7 @@ export default class App extends React.Component
       age : this.agebox.value,
       gender : this.genderbox.value
     }
-    fetch("https://todearhemant.pythonanywhere.com/patient/api/patients/",{
+    fetch("http://localhost:8989/patient/savepatient",{
       method : "POST",
       headers : {
         "Content-Type" : "application/json"
