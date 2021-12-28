@@ -13,10 +13,10 @@ export default class App extends React.Component
   getData = ()=>
   {
     // GET URL
-    fetch("https://todearhemant.pythonanywhere.com/patient/api/patients/")
+    fetch("http://localhost:8989/patient/fetchpatients")
     .then(response=>response.json())
     .then(data=>{
-        //console.log(data)
+        console.log(data)
         this.setState({patients:data})
     })
     .catch(err=>{
@@ -40,7 +40,13 @@ export default class App extends React.Component
     })
     .then(response=>response.json())
     .then(data=>{
-        console.log(data)        
+        if(data.status)        
+        {
+          alert("Data Saved !")
+          console.log(data.patient)
+        }
+        else
+          alert("Data Not Saved !")  
     })
     .catch(err=>{
       alert("Something Wrong !")
@@ -79,7 +85,7 @@ export default class App extends React.Component
           <br/><br/>
           <button type='submit'>Add Data</button>
           &nbsp;
-          <button onClick={this.getData}>Get Data</button>
+          <button type='button' onClick={this.getData}>Get Data</button>
         </form>
         <hr/>
 
@@ -91,7 +97,7 @@ export default class App extends React.Component
 
         <table border='1' align='center' cellPadding='10' cellSpacing='5'>
           <tr>
-            <th>Patient Id</th>
+            <th>S.No</th>
             <th>Name</th>
             <th>Age</th>
             <th>Gender</th>
@@ -99,7 +105,7 @@ export default class App extends React.Component
           </tr>
           {this.state.patients.map((ob,index)=>{
             return <tr key={index}>
-              <td>{ob.id}</td>
+              <td>{index+1}</td>
               <td>{ob.name}</td>
               <td>{ob.age}</td>
               <td>{ob.gender}</td>
