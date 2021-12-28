@@ -56,12 +56,17 @@ export default class App extends React.Component
 
   deletePatient = ()=>{
     var id = this.state.delete_data.id
-    fetch(`https://todearhemant.pythonanywhere.com/patient/api/patients/${id}/`,{
-      method : "Delete"
+    
+    fetch("http://localhost:8989/patient/deletepatient",{
+      method : "Post",
+      headers : {
+        "Content-Type" : "application/json"
+      },
+      body : JSON.stringify({id:id})
     })
     .then(response=>{
       console.log(response.status)
-      this.setState({delete_data:undefined,patients:this.state.patients.filter(ob=>ob.id!=id)})
+      this.setState({delete_data:undefined,patients:this.state.patients.filter(ob=>ob._id!=id)})
     })
     .catch(err=>{
       alert("Something Wrong !")
@@ -110,7 +115,7 @@ export default class App extends React.Component
               <td>{ob.age}</td>
               <td>{ob.gender}</td>
               <th>
-                <button onClick={()=>this.setState({delete_data:{id:ob.id,name:ob.name}})}>Delete</button>
+                <button onClick={()=>this.setState({delete_data:{id:ob._id,name:ob.name}})}>Delete</button>
               </th>
             </tr>
           })}

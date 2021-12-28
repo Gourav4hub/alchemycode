@@ -8,6 +8,23 @@ class Patient
         age: Number,
         gender: String
       });
+
+    deletePatient = (id,callback)=>
+    {
+        var model = mongoose.model("patient",this.patientSchema,"patient");
+        mongooseConnection(conn=>{
+            conn.once('open', function() 
+            {
+                 model.deleteOne({_id:id}).exec(err=>{
+                     conn.close()
+                     if(err)
+                        callback(false)
+                     else
+                        callback(true)   
+                 })   
+            })
+        }) 
+    } 
           
 
     savePatient = (data,callback)=>

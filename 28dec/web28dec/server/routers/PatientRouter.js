@@ -21,4 +21,12 @@ router.get("/fetchpatients",(request,response)=>{
     })
 })
 
+router.post("/deletepatient",(request,response)=>
+{
+    //console.log("Del ID : ",request.body.id)
+    patientModel.deletePatient(request.body.id,(status)=>{
+        response.json({status:status})
+    })    
+})
+
 module.exports = router
