@@ -6,6 +6,8 @@ const patientRouter = require("./server/routers/PatientRouter")
 const app = express()
 
 app.use(express.json()) // for receiving JSON data
+app.use(express.urlencoded())
+
 app.use(express.static(path.join(__dirname,"build")))
 
 app.use("/patient",patientRouter)
