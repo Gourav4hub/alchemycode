@@ -5,7 +5,8 @@ export default class App extends React.Component
   constructor(){
     super()
     this.state = {
-      patients : []
+      patients : [],
+      delete_data : undefined
     }
   }
 
@@ -47,6 +48,21 @@ export default class App extends React.Component
     event.preventDefault()
   }
 
+  deletePatient = ()=>{
+    var id = this.state.delete_data.id
+    fetch(`https://todearhemant.pythonanywhere.com/patient/api/patients/${id}/`,{
+      method : "Delete"
+    })
+    .then(response=>{
+      console.log(response.status)
+      this.setState({delete_data:undefined,patients:this.state.patients.filter(ob=>ob.id!=id)})
+    })
+    .catch(err=>{
+      alert("Something Wrong !")
+      this.setState({delete_data:undefined})
+    })
+  }
+
   render()
   {
     return <div>
@@ -65,15 +81,21 @@ export default class App extends React.Component
           &nbsp;
           <button onClick={this.getData}>Get Data</button>
         </form>
-        
-        
         <hr/>
+
+        {this.state.delete_data==undefined?"":
+        <h5 style={{color:"red"}}>Are you sure to delete "{this.state.delete_data.name}" ! 
+          &nbsp;&nbsp;<button onClick={this.deletePatient}>Ok</button>&nbsp;&nbsp; 
+          <button onClick={()=>this.setState({delete_data:undefined})}>Close</button>
+        </h5>}
+
         <table border='1' align='center' cellPadding='10' cellSpacing='5'>
           <tr>
             <th>Patient Id</th>
             <th>Name</th>
             <th>Age</th>
             <th>Gender</th>
+            <th>Operation</th>
           </tr>
           {this.state.patients.map((ob,index)=>{
             return <tr key={index}>
@@ -81,6 +103,9 @@ export default class App extends React.Component
               <td>{ob.name}</td>
               <td>{ob.age}</td>
               <td>{ob.gender}</td>
+              <th>
+                <button onClick={()=>this.setState({delete_data:{id:ob.id,name:ob.name}})}>Delete</button>
+              </th>
             </tr>
           })}
         </table>
