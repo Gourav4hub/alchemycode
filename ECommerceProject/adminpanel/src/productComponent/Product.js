@@ -1,18 +1,34 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Store from '../appredux/store'
-
+import productService from '../services/ProductService'
 var mapStateToProps = state => {
     return { categories : state.categories , brands : state.brands}
 }
 
 class Product extends React.Component
 {
+    save = (event)=>{
+        var formData = new FormData()
+        formData.append('prod_image',this.filebox.files[0])
+        formData.append('prod_name',this.namebox.value)
+        formData.append('prod_price',this.pricebox.value)
+        formData.append('prod_cate',this.catebox.value)
+        formData.append('prod_brand',this.brandbox.value)
+        
+        productService.saveProduct(formData)
+        .then(response=>response.json())
+        .then(data=>{
+            console.log(data)
+        })
+        event.preventDefault()
+    }
+
     render() {
     return <>
         <h1>Product Page</h1>
         <hr className="col-12"/>  
-        <form>
+        <form onSubmit={this.save}>
         <div className='row'>
            <div className='col-lg-6'>
                 <input type="text" ref={c=>this.namebox=c} className="form-control" 
@@ -51,11 +67,11 @@ class Product extends React.Component
         <br/>
         <div className='row'>
            <div className='col-lg-6'>
-               <input type="file" className="form-control" 
-                required/>
+               <input type="file" ref={c=>this.filebox=c} 
+               className="form-control" required/>
            </div>
            <div className='col-lg-6'>
-               <button className='btn btn-success'>Save Product</button>
+               <button type='submit' className='btn btn-success'>Save Product</button>
            </div>
         </div>
         </form>   
