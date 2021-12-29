@@ -4,13 +4,13 @@ var mongoose = require('mongoose');
 class Category
 {
     categorySchema = mongoose.Schema({        
-        cate_name: String,        
+        cate_name: String       
     });
     
 
     saveCategory = (data,callback)=>
-    {
-        var model = mongoose.model("category",this.categorySchema,"category")
+    {       
+        var model = mongoose.model("category",this.categorySchema,"category");
         mongooseConnection(conn=>{
             conn.once('open', function() 
             {

@@ -11,9 +11,10 @@ router.get("/list",(request,response)=>
 // http://localhost:8989/api/category/save
 router.post("/save",(request,response)=>
 {
-    categoryModel.saveCategory((request.body,(status,data)=>{
+    console.log(request.body)
+    categoryModel.saveCategory(request.body,(status,data)=>{
             response.json({status:status,category:data})
-    }));
+    });
 })
 
 module.exports = router
