@@ -9,6 +9,12 @@ function Menu()
         <nav className="tm-nav" id="tm-nav">            
             <ul>
                 <li className="tm-nav-item active">
+                <Link to="/brand"  className="tm-nav-link">
+                    <i className="fas fa-home"></i>
+                   Brand
+                </Link></li>
+
+                <li className="tm-nav-item active">
                     <Link to="/" className="tm-nav-link">
                     <i className="fas fa-home"></i>
                    Category
@@ -19,6 +25,8 @@ function Menu()
                     <i className="fas fa-home"></i>
                    Product
                 </Link></li>
+
+                
             </ul>
         </nav>
     </div>
