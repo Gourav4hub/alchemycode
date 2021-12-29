@@ -1,21 +1,24 @@
+import {Link} from 'react-router-dom'
 function Menu()
 {
-    return <header class="tm-header" id="tm-header">
-    <div class="tm-header-wrapper">        
-        <div class="tm-site-header">            
-            <h1 class="text-center">ECommerce Admin Panel</h1>
+    return <header className="tm-header" id="tm-header">
+    <div className="tm-header-wrapper">        
+        <div className="tm-site-header">            
+            <h1 className="text-center">ECommerce Admin Panel</h1>
         </div>
-        <nav class="tm-nav" id="tm-nav">            
+        <nav className="tm-nav" id="tm-nav">            
             <ul>
-                <li class="tm-nav-item active"><a href="index.html" class="tm-nav-link">
-                    <i class="fas fa-home"></i>
+                <li className="tm-nav-item active">
+                    <Link to="/" className="tm-nav-link">
+                    <i className="fas fa-home"></i>
                    Category
-                </a></li>
+                </Link></li>
 
-                <li class="tm-nav-item active"><a href="index.html" class="tm-nav-link">
-                    <i class="fas fa-home"></i>
+                <li className="tm-nav-item active">
+                <Link to="/product"  className="tm-nav-link">
+                    <i className="fas fa-home"></i>
                    Product
-                </a></li>
+                </Link></li>
             </ul>
         </nav>
     </div>
