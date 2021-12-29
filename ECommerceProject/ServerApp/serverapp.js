@@ -13,6 +13,8 @@ app.use(cors()) // Accepting Request from anywhere
 app.use(express.json()) // for receiving JSON data
 app.use(upload())
 
+app.use(express.static(path.join(__dirname)))
+
 app.use("/api/category",categoryRouter)
 app.use("/api/brand",brandRouter)
 app.use("/api/product",productRouter)

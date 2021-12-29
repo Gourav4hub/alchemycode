@@ -1,9 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Store from '../appredux/store'
+
+import {ACTION_ADD_PRODUCT} from '../appredux/actions/ProductAction'
+
 import productService from '../services/ProductService'
+
 var mapStateToProps = state => {
-    return { categories : state.categories , brands : state.brands}
+    return { categories : state.categories , 
+             brands : state.brands,
+             products : state.products  
+           }
 }
 
 class Product extends React.Component
@@ -19,13 +26,18 @@ class Product extends React.Component
         productService.saveProduct(formData)
         .then(response=>response.json())
         .then(data=>{
-            console.log(data)
+            if(data.status){
+                Store.dispatch({...ACTION_ADD_PRODUCT,payload:{
+                    product :  data.product
+                }})
+            }
         })
         event.preventDefault()
     }
 
-    render() {
-    return <>
+    render() 
+    {        
+        return <>
         <h1>Product Page</h1>
         <hr className="col-12"/>  
         <form onSubmit={this.save}>
@@ -87,6 +99,21 @@ class Product extends React.Component
                     <th>Price</th>
                 </tr>
             </thead>
+            <tbody>
+                {this.props.products.map((prod,index)=>
+                {
+                    return <tr>
+                    <th>{index+1}</th>
+                    <th>
+                        <img src={"http://localhost:8989"+prod.prod_image} height="200" width="200"/>
+                    </th>
+                    <th>{prod.prod_name}</th>                    
+                    <th>Category</th>
+                    <th>{prod.prod_brand}</th>
+                    <th>{prod.prod_price}</th>
+                    </tr>
+                })}
+            </tbody>
         </table>
     </>
     }
