@@ -1,21 +1,13 @@
 import React from 'react'
-import categoryService from '../services/CategoryService'
+import { connect } from 'react-redux'
+var mapStateToProps = state => {
+    return { categories : state.categories}
+}
 
 class Category extends React.Component
 {
     constructor(){
         super()
-        this.state = {
-            categories : []
-        }
-    }
-
-    componentDidMount(){
-        categoryService.getCategories()
-        .then(response=>response.json())
-        .then(data=>{
-            this.setState({categories:data})
-        })
     }
 
     render() 
@@ -45,7 +37,7 @@ class Category extends React.Component
                 </tr>
             </thead>
             <tbody>
-                {this.state.categories.map((ob,index)=>{
+                {this.props.categories.map((ob,index)=>{
                     return <tr key={index}>
                            <th>{index+1}</th> 
                            <th>{ob.cate_name}</th>
@@ -57,4 +49,4 @@ class Category extends React.Component
     }
 }
 
-export default Category
+export default connect(mapStateToProps)(Category)
