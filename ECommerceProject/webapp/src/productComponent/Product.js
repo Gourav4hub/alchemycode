@@ -1,108 +1,43 @@
 import React from 'react'
+import packageJson from '../../package.json';
+import { connect } from 'react-redux'
+var mapStateToProps = state => {
+   return { categories : state.masterdata.categories , 
+            brands : state.masterdata.brands,
+            products : state.masterdata.products
+          }
+}
 
 class Product extends React.Component
 {
   render(){
     return <>
-       <div class="brand_color">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="titlepage">
+       <div className="brand_color">
+        <div className="container">
+            <div className="row">
+                <div className="col-md-12">
+                    <div className="titlepage">
                         <h2>Our Products</h2>
                     </div>
                 </div>
             </div>
         </div>
         </div>
-        <div class="product-bg">
-         <div class="product-bg-white">
-         <div class="container">
-            <div class="row">
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p1.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
+        <div className="product-bg">
+         <div className="product-bg-white">
+         <div className="container">
+            <div className="row">
+               {this.props.products.map((prod,index)=>{
+                  return  <div key={index} className="col-xl-3 col-lg-3 col-md-6 col-sm-12">
+                    <div className="product-box">
+                       <i><img 
+                       src={`${packageJson.server}`+prod.prod_image}/></i>
+                        <h3>{prod.prod_name}</h3>
+                        <span>Rs. {prod.prod_price}</span>
+                     </div>
                   </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p2.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p3.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p4.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p5.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p2.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p6.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p7.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p6.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p1.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p2.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
-               <div class="col-xl-3 col-lg-3 col-md-6 col-sm-12">
-                  <div class="product-box">
-                     <i><img src="/icon/p4.png"/></i>
-                     <h3>Norton Internet Security</h3>
-                     <span>$25.00</span>
-                  </div>
-               </div>
+               })}
+              
                </div>
             </div>
          </div>
@@ -111,4 +46,4 @@ class Product extends React.Component
   }
 }
 
-export default Product
+export default connect(mapStateToProps)(Product)
