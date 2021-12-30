@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Store from '../appredux/store'
-
+import packageJson from '../../package.json';
 import {ACTION_ADD_PRODUCT,ACTION_CHANGE_PRODUCT_STATUS} from '../appredux/actions/ProductAction'
 
 import productService from '../services/ProductService'
@@ -9,7 +9,7 @@ import productService from '../services/ProductService'
 var mapStateToProps = state => {
     return { categories : state.categories , 
              brands : state.brands,
-             products : state.products  
+             products : state.products.sort((a,b)=>(a.prod_status > b.prod_status) ? 1 : ((b.prod_status > a.prod_status) ? -1 : 0))  
            }
 }
 
@@ -119,7 +119,7 @@ class Product extends React.Component
                     return <tr key={index}>
                     <th>{index+1}</th>
                     <th>
-                        <img src={"http://localhost:8989"+prod.prod_image} height="200" width="200"/>
+                        <img src={`${packageJson.server}`+prod.prod_image} height="200" width="200"/>
                     </th>
                     <th>{prod.prod_name}</th>                    
                     <th>Category</th>

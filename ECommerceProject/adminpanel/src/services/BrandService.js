@@ -1,7 +1,8 @@
+import packageJson from '../../package.json';
 class BrandService
 {
     getBrands = ()=>{
-        return fetch("http://localhost:8989/api/brand/list")
+        return fetch(`${packageJson.server}/api/brand/list`)
     }
 }
 var obj = new BrandService()

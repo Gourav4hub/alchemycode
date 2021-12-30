@@ -1,18 +1,19 @@
+import packageJson from '../../package.json';
 class ProductService
 {
     saveProduct = (data)=>{
-        return fetch("http://localhost:8989/api/product/save",{
+        return fetch(`${packageJson.server}/api/product/save`,{
             method : "POST",
             body : data
         })
     }
 
     getProducts = ()=>{
-        return fetch("http://localhost:8989/api/product/list")
+        return fetch(`${packageJson.server}/api/product/list`)
     }
 
     changeStatus = (status,pid)=>{
-        return fetch("http://localhost:8989/api/product/changestatus",{
+        return fetch(`${packageJson.server}/api/product/changestatus`,{
             method : "POST",
             headers:{
                 "Content-Type" : "application/json"
