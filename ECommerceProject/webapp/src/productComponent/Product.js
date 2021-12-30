@@ -12,14 +12,43 @@ var mapStateToProps = state => {
       products: state.masterdata.products,
 
       filtercategory : state.filter.categories,
-      filterbrand : state.filter.brands
+      filterbrand : state.filter.brands,
+      filtercategoryCount : state.filter.categories.length,
+      filterbrandCount : state.filter.brands.length
    }
 }
 
 class Product extends React.Component 
 {
+   filterData = ()=>
+   {      
+      if(this.props.filtercategoryCount>0  && this.props.filterbrandCount>0)
+      {
+      var arr = this.props.products.filter(ob=>this.props.filtercategory.     indexOf(ob.prod_cate)!=-1).filter(ob=>this.props.filterbrand.     indexOf(ob.prod_brand)!=-1)
+      console.log("Filter 1 : ",arr)
+      }else{
+         if(this.props.filtercategoryCount>0  && this.props.filterbrandCount==0)
+         {
+            var arr = this.props.products.filter(ob=>this.props.filtercategory.indexOf(ob.prod_cate)!=-1)
+            console.log("Filter 2 : ",arr)
+         }else{
+            if(this.props.filtercategoryCount==0  && this.props.filterbrandCount>0)
+            {
+               var arr = this.props.products.filter(ob=>this.props.filterbrand.indexOf(ob.prod_brand)!=-1)
+               console.log("Filter 3: ",arr)
+            }else{
+               var arr = this.props.products
+               console.log("Filter 4 : ",arr)
+            }
+         }
+      }      
+   }
+
+   componentDidMount(){
+      this.filterData()
+   }
    componentDidUpdate(){
-      console.log(this.props.filtercategory)
+      this.filterData()
    }
 
    chooseCategory = (cid,status)=>
@@ -55,7 +84,7 @@ class Product extends React.Component
 
                   <div className="row">
                      <div className='col-lg-2'>
-                        <h2 className='bg-info'>Category</h2>
+                        <h2 className='bg-info'>Category ({this.props.filtercategoryCount})</h2>
                         {this.props.categories.map((cate, index) => 
                         {
                            return <div key={index}>
@@ -66,7 +95,7 @@ class Product extends React.Component
                               </div>
                         })}
                         <hr/>
-                        <h2 className='bg-info'>Brand</h2>
+                        <h2 className='bg-info'>Brand ({this.props.filterbrandCount})</h2>
                         {this.props.brands.map((brand, index) => 
                         {
                            return <div key={index}>

@@ -82,7 +82,7 @@ class Product extends React.Component
                 required>
                     <option value=''>Choose Brand</option>
                     {this.props.brands.map((ob,index)=>{
-                    return <option key={index} value={ob.name}>                           
+                    return <option key={index} value={ob.id}>                           
                                 {ob.name}
                             </option>
                 })}
