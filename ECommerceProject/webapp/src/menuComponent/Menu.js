@@ -1,5 +1,5 @@
 import React from 'react'
-
+import {Link} from 'react-router-dom'
 class Menu extends React.Component
 {
   render(){
@@ -20,7 +20,7 @@ class Menu extends React.Component
                      <div className="limit-box">
                         <nav className="main-menu">
                            <ul className="menu-area-main">                              
-                              <li> <a href="about.html">Contact</a> </li>                              
+                              <li> <Link to="/">Home</Link> </li>                              
                                
                            </ul>
                         </nav>
@@ -28,7 +28,7 @@ class Menu extends React.Component
                   </div>
                </div>
                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-                  <li><a className="buy" href="#">Login</a></li>
+                  <li><Link className="buy" to="/login">Login</Link></li>
                </div>
             </div>
          </div>   

@@ -1,7 +1,11 @@
 import React from 'react'
 import Menu from './menuComponent/Menu'
 import Product from './productComponent/Product'
+import Login from './loginComponent/Login'
 import MasterService from './services/MasterService'
+
+import {Routes,Route} from 'react-router-dom'
+
 import * as actions from './appredux/actions/MasterAction'
 import Store from './appredux/store'
 class App extends React.Component
@@ -38,7 +42,12 @@ class App extends React.Component
   render(){
     return <>
         <Menu/>
-        <Product/>
+        <Routes>
+          <Route path="/" element={<Product/>}/>
+          <Route path="/login" element={<Login/>}/>
+        </Routes>
+     
+        
     </>
   }
 }
