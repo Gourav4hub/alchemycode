@@ -6,6 +6,14 @@ const productModel = require('../models/ProductModel')
 
 const router = express.Router()
 
+// http://localhost:8989/api/product/changestatus
+router.post("/changestatus",(request,response)=>
+{
+    productModel.changeStatus(request.body,(status)=>{
+       response.json({status})
+    })
+})
+
 // http://localhost:8989/api/product/save
 router.post("/save",(request,response)=>
 {

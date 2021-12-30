@@ -34,7 +34,7 @@ export default class App extends React.Component
                     productService.getProducts()
                     .then(response=>response.json())
                     .then(data=>{
-                        //console.log(data)
+                        console.log(data)
                         Store.dispatch({...ACTION_LOAD_PRODUCTS,payload:{
                                     products : data
                                 }})

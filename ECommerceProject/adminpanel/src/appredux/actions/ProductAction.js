@@ -12,3 +12,11 @@ export const ACTION_ADD_PRODUCT = {
         product : undefined
     }
 }
+
+export const ACTION_CHANGE_PRODUCT_STATUS = {
+    type : actionType.CHANGE_PRODUCT_STATUS,
+    payload : {
+        pid : undefined,
+        status : undefined
+    }
+}

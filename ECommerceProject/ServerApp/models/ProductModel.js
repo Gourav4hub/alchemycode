@@ -8,12 +8,31 @@ class Product
         prod_price: Number,
         prod_cate: String,
         prod_brand: String,
-        prod_image: String
+        prod_image: String,
+        prod_status : Boolean
       });
+
+    changeStatus = (data,callback)=>{
+        var model = mongoose.model("product",this.productSchema,"product");
+        mongooseConnection(conn=>{
+            conn.once('open', function() 
+            {
+                model.find({_id:data.pid}).updateOne({prod_status:data.status},(err)=>
+                {
+                    conn.close()
+                    if(err)
+                        callback(false)
+                    else
+                        callback(true)    
+                })                
+            })
+        })
+    }
     
 
     saveProduct = (data,callback)=>
     {       
+        data.prod_status = true
         var model = mongoose.model("product",this.productSchema,"product");
         mongooseConnection(conn=>{
             conn.once('open', function() 

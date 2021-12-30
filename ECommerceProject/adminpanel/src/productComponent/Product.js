@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Store from '../appredux/store'
 
-import {ACTION_ADD_PRODUCT} from '../appredux/actions/ProductAction'
+import {ACTION_ADD_PRODUCT,ACTION_CHANGE_PRODUCT_STATUS} from '../appredux/actions/ProductAction'
 
 import productService from '../services/ProductService'
 
@@ -33,6 +33,19 @@ class Product extends React.Component
             }
         })
         event.preventDefault()
+    }
+
+    changeStatus = (status,pid)=>{
+        console.log(status,pid)
+        productService.changeStatus(status,pid)
+        .then(response=>response.json())
+        .then(data=>{
+            if(data.status){
+               Store.dispatch({...ACTION_CHANGE_PRODUCT_STATUS,payload:{
+                   pid,status
+               }})
+            }
+        })
     }
 
     render() 
@@ -97,12 +110,13 @@ class Product extends React.Component
                     <th>Category</th>
                     <th>Brand</th>
                     <th>Price</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
                 {this.props.products.map((prod,index)=>
                 {
-                    return <tr>
+                    return <tr key={index}>
                     <th>{index+1}</th>
                     <th>
                         <img src={"http://localhost:8989"+prod.prod_image} height="200" width="200"/>
@@ -111,6 +125,9 @@ class Product extends React.Component
                     <th>Category</th>
                     <th>{prod.prod_brand}</th>
                     <th>{prod.prod_price}</th>
+                    <th>
+                        {prod.prod_status?<button className='btn btn-warning' onClick={()=>this.changeStatus(!prod.prod_status,prod._id)}>DeActivate</button>:<button className='btn btn-info' onClick={()=>this.changeStatus(!prod.prod_status,prod._id)}>Activate</button>}
+                    </th>
                     </tr>
                 })}
             </tbody>
