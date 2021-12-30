@@ -20,36 +20,36 @@ var mapStateToProps = state => {
 
 class Product extends React.Component 
 {
+   constructor(){
+      super()
+      this.state = {
+         filterData : []
+      }
+   }
+
    filterData = ()=>
    {      
+      var arr = [];
       if(this.props.filtercategoryCount>0  && this.props.filterbrandCount>0)
       {
-      var arr = this.props.products.filter(ob=>this.props.filtercategory.     indexOf(ob.prod_cate)!=-1).filter(ob=>this.props.filterbrand.     indexOf(ob.prod_brand)!=-1)
-      console.log("Filter 1 : ",arr)
+      arr = this.props.products.filter(ob=>this.props.filtercategory.indexOf(ob.prod_cate)!=-1).filter(ob=>this.props.filterbrand.indexOf(parseInt(ob.prod_brand))!=-1)      
       }else{
          if(this.props.filtercategoryCount>0  && this.props.filterbrandCount==0)
          {
-            var arr = this.props.products.filter(ob=>this.props.filtercategory.indexOf(ob.prod_cate)!=-1)
-            console.log("Filter 2 : ",arr)
+            arr = this.props.products.filter(ob=>this.props.filtercategory.indexOf(ob.prod_cate)!=-1)
          }else{
             if(this.props.filtercategoryCount==0  && this.props.filterbrandCount>0)
-            {
-               var arr = this.props.products.filter(ob=>this.props.filterbrand.indexOf(ob.prod_brand)!=-1)
-               console.log("Filter 3: ",arr)
+            {              
+               arr = this.props.products.filter(ob=>this.props.filterbrand.indexOf(parseInt(ob.prod_brand))!=-1)
             }else{
-               var arr = this.props.products
-               console.log("Filter 4 : ",arr)
+               arr = this.props.products
             }
          }
-      }      
+      }   
+      return arr   
    }
 
-   componentDidMount(){
-      this.filterData()
-   }
-   componentDidUpdate(){
-      this.filterData()
-   }
+  
 
    chooseCategory = (cid,status)=>
    {      
@@ -110,7 +110,7 @@ class Product extends React.Component
 
                      <div className='col-lg-10'>
                         <div className="row">
-                           {this.props.products.map((prod, index) => {
+                           {this.filterData().map((prod, index) => {
                               return <div key={index} className="col-xl-3 col-lg-3 col-md-6 col-sm-6">
                                  <div className="product-box">
                                     <i><img
