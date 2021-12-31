@@ -2,6 +2,27 @@ import React from 'react'
 import userService from '../services/UserService'
 class Login extends React.Component 
 {
+    constructor(){
+        super()
+        this.state = {
+            regmsg : '',
+            loginmsg : ''
+        }
+    }
+
+    login = (event)=>{
+        var ob = {
+            email : this.loginemailbox.value,
+            password : this.loginpwdbox.value,
+        }
+        console.log(ob)
+        userService.loginUser(ob).then(response=>response.json()).then(data=>{
+            console.log(data)
+            this.setState({loginmsg:data.msg})
+        });
+        event.preventDefault()
+    }
+
     register = (event)=>{
         var ob = {
             name : this.namebox.value,
@@ -11,7 +32,10 @@ class Login extends React.Component
             address : [this.addressbox.value]
         }
         console.log(ob)
-        userService.saveUser(ob);
+        userService.saveUser(ob).then(response=>response.json()).then(data=>{
+            console.log(data)
+            this.setState({regmsg:data.msg})
+        });;
         event.preventDefault()
     }
 
@@ -50,24 +74,32 @@ class Login extends React.Component
                             <div class="col-md-12">
                                 <textarea ref={c=>this.addressbox=c} class="textarea" placeholder="Address" required></textarea>
                             </div>
-                            <div class=" col-md-12">
-                                <button type='submit' class="send">Register</button>
+                            <div class="col-md-6">
+                                &nbsp;
+                                <b className='text-danger'>{this.state.regmsg}</b>
+                            </div>
+                            <div class="col-md-6">
+                                <button type='submit' class="send">Register</button>                               
                             </div>
                         </div>
                     </form>
                 </div>
                 <div className='col-lg-6'>
                 <h2>User Login</h2>
-                    <form class="main_form">
+                    <form class="main_form" onSubmit={this.login}>
                         <div class="row">
                             <div class="col-lg-12">
-                                <input class="form-control" placeholder="Email" type="text" name="Email" />
+                                <input ref={c=>this.loginemailbox=c}class="form-control" placeholder="Email" type="text" name="Email" required/>
                             </div>
                             <div class="col-lg-12">
-                                <input class="form-control" placeholder="Password" type="password" />
+                                <input ref={c=>this.loginpwdbox=c}class="form-control" placeholder="Password" type="password" required />
                             </div>                          
-                            <div class=" col-md-12">
-                                <button class="send">Login</button>
+                            <div class="col-md-6">
+                                &nbsp;
+                                <b className='text-danger'>{this.state.loginmsg}</b>
+                            </div>
+                            <div class="col-md-6">
+                                <button type='submit' class="send">Login</button>                               
                             </div>
                         </div>
                     </form>
