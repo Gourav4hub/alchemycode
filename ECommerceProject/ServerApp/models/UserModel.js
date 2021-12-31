@@ -8,7 +8,9 @@ class User
         phone: String,
         email: String,
         password: String,
-        address : Array
+        address : Array,
+        otp : Number,
+        isverify : Boolean
     });
     
     loginUser = (email,callback)=>

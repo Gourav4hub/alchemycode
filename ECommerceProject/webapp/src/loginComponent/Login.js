@@ -32,6 +32,7 @@ class Login extends React.Component
             address : [this.addressbox.value]
         }
         console.log(ob)
+        this.setState({regmsg:"Process is running ..... "})
         userService.saveUser(ob).then(response=>response.json()).then(data=>{
             console.log(data)
             this.setState({regmsg:data.msg})

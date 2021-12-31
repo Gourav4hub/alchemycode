@@ -15,6 +15,7 @@
     "express": "^4.17.2",
     "express-fileupload": "^1.2.1",
     "mongoose": "^6.1.4",
+    "nodemailer": "^6.7.2",
     "path": "^0.12.7",
     "uuid": "^8.3.2"
   }
