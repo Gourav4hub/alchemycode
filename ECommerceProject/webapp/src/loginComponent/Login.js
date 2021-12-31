@@ -1,12 +1,19 @@
 import React from 'react'
 import userService from '../services/UserService'
+
+import Store from '../appredux/store'
+import {ACTION_USER_LOGIN} from '../appredux/actions/UserAction'
+
+import {Navigate} from 'react-router-dom'
+
 class Login extends React.Component 
 {
     constructor(){
         super()
         this.state = {
             regmsg : '',
-            loginmsg : ''
+            loginmsg : '',
+            loginstatus : false
         }
     }
 
@@ -18,6 +25,13 @@ class Login extends React.Component
         console.log(ob)
         userService.loginUser(ob).then(response=>response.json()).then(data=>{
             console.log(data)
+            if(data.status){
+                Store.dispatch({...ACTION_USER_LOGIN,payload:{
+                    token : data.token,
+                    username : data.username
+                }})
+                this.setState({loginstatus:true})
+            }else
             this.setState({loginmsg:data.msg})
         });
         event.preventDefault()
@@ -40,7 +54,12 @@ class Login extends React.Component
         event.preventDefault()
     }
 
-    render() {
+    render() 
+    {
+        if(this.state.loginstatus){
+            return <Navigate to="/"/>
+        }
+
         return <>
             <div class="brand_color">
                 <div class="container">

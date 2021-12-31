@@ -1,7 +1,7 @@
 const express = require('express')
 const mailService = require('./EmailService')
 const userModel = require('../models/UserModel')
-
+const jwt = require('../JWT')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
@@ -24,7 +24,10 @@ router.post("/login",(request,response)=>
             if(result)
             {
                 if(data.isverify)
-                  response.json({status:true,msg:"Success !"})
+                {
+                  var token = jwt.generateAccessToken(data._id)
+                  response.json({status:true,msg:"Success !",token:token,username:data.name})
+                }
                 else                  
                   response.json({status:false,msg:"Verify your account first !"})
             }else{

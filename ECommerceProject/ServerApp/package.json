@@ -12,8 +12,10 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
     "express": "^4.17.2",
     "express-fileupload": "^1.2.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.1.4",
     "nodemailer": "^6.7.2",
     "path": "^0.12.7",

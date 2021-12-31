@@ -1,7 +1,20 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import Store from '../appredux/store'
+import {ACTION_USER_LOGOUT} from '../appredux/actions/UserAction'
+import {connect} from 'react-redux'
+var mapStateToProps = state => {
+   return {
+      user: state.user,
+   }
+}
+
 class Menu extends React.Component
 {
+   logout = ()=>{
+      Store.dispatch({...ACTION_USER_LOGOUT})
+   }
+
   render(){
     return <>
         <header>        
@@ -20,7 +33,9 @@ class Menu extends React.Component
                      <div className="limit-box">
                         <nav className="main-menu">
                            <ul className="menu-area-main">                              
-                              <li> <Link to="/">Home</Link> </li>                              
+                  <li> <Link to="/">Home</Link> </li>
+                  
+                  {this.props.user.loginstatus?<li><Link to="/">Profile</Link></li>:<></>}
                                
                            </ul>
                         </nav>
@@ -28,7 +43,8 @@ class Menu extends React.Component
                   </div>
                </div>
                <div className="col-xl-2 col-lg-2 col-md-2 col-sm-2">
-                  <li><Link className="buy" to="/login">Login</Link></li>
+                  {this.props.user.loginstatus?<li><a className="buy" href='#' onClick={this.logout}>Logout</a></li>:<li><Link className="buy" to="/login">Login</Link></li>}
+                  
                </div>
             </div>
          </div>   
@@ -38,4 +54,4 @@ class Menu extends React.Component
   }
 }
 
-export default Menu
+export default connect(mapStateToProps)(Menu)
