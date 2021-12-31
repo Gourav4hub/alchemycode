@@ -35,7 +35,7 @@ class Menu extends React.Component
                            <ul className="menu-area-main">                              
                   <li> <Link to="/">Home</Link> </li>
                   
-                  {this.props.user.loginstatus?<li><Link to="/">Profile</Link></li>:<></>}
+                  {this.props.user.loginstatus?<li><Link to="/profile">Profile ({this.props.user.username})</Link></li>:<></>}
                                
                            </ul>
                         </nav>
