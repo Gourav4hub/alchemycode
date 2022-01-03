@@ -1,11 +1,34 @@
 <h1>App Component</h1>
 <b>{{title}}</b> &nbsp; <button (click)="change()">Change</button>
 <br>
+<hr>
+    <h2>Student Records</h2>
+    <input type='text' #roll placeholder="Roll Number">&nbsp;
+    <input type='text' #name placeholder="Name">&nbsp;
+    <input type='number' #age placeholder="Age">&nbsp;
+    <input type='number' #marks placeholder="Marks">&nbsp;
+    &nbsp;&nbsp;&nbsp;
+    <button (click)="add(roll,name,age,marks)">Add Student</button>
+    <br><br>
+    <table border='1' align='center' cellpadding='10' cellspacing='5'>
+            <tr>
+                <th>Roll Number</th>
+                <th>Name</th>
+                <th>Age</th>
+                <th>Marks</th>
+            </tr>
 
+            <tr *ngFor="let ob of students">
+                <th>{{ob.roll}}</th>
+                <th>{{ob.name}}</th>
+                <th>{{ob.age}}</th>
+                <th>{{ob.marks}}</th>
+            </tr>
+    </table>
+<hr>
 <ul>
     <li *ngFor="let nm of names">{{nm}}</li>
 </ul>
-
 <hr>
 <app-demo></app-demo>
 <app-sample></app-sample>
