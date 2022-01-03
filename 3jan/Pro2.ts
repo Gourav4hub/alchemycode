@@ -20,7 +20,12 @@ class Employee
     }
 }
 
-class Manager extends Employee
+interface Tax
+{
+    payIncomeTax():void;
+}
+
+class Manager extends Employee implements Tax
 {
     private department:String;
     private salary:number;
@@ -43,6 +48,11 @@ class Manager extends Employee
         super.show()
         console.log("Department : ",this.department)
         console.log("Salary : ",this.salary)
+    }
+
+    public payIncomeTax():void
+    {
+        // ******
     }
 }
 
