@@ -16,7 +16,27 @@ router.get("/verify",(request,response)=>{
 // http://localhost:8989/user/updateProfile
 router.post("/updateProfile",(request,response)=>
 {
-  console.log(request.body)
+  jwt.authenticateToken(request,(data)=>{    
+    if(data.status)
+    {
+      // Update the data
+    }else{
+      response.json({status:false,code:data.code})
+    }
+  })
+})
+
+// http://localhost:8989/user/updatePassword
+router.post("/updatePassword",(request,response)=>
+{
+  jwt.authenticateToken(request,(data)=>{    
+    if(data.status)
+    {
+      // Update the Password
+    }else{
+      response.json({status:false,code:data.code})
+    }
+  })
 })
 
 // http://localhost:8989/user/getUser

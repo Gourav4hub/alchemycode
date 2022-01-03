@@ -59,7 +59,16 @@ class Profile extends React.Component
         });
         event.preventDefault()
     }
-    updatePassword =()=>{}
+    updatePassword =(event)=>{
+        var ob = {
+            oldpass : this.oldpwdbox.value,
+            newpass : this.newpwdbox.value
+        }
+        userService.updatePassword(ob,this.props.user.token).then(response=>response.json()).then(data=>{
+            console.log(data)
+        });
+        event.preventDefault()
+    }
 
     render()
     {

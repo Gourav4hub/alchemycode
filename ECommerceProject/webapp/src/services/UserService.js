@@ -41,6 +41,17 @@ class UserService
             body: JSON.stringify(data)
         })
     }
+
+    updatePassword = (data,token)=>{
+        return fetch(`${packageJson.server}/user/updatePassword`,{
+            method : 'POST',
+            headers:{
+                "Content-Type" : "application/json",
+                "Authorization" : 'Bearer '.concat(token)
+            },
+            body: JSON.stringify(data)
+        })
+    }
 }
 var obj = new UserService()
 export default obj;
