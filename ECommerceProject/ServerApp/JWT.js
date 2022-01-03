@@ -17,16 +17,20 @@ class JWT
     
         if (token == null)
             callback({status:false,code:401})
-    
-        jwt.verify(token, process.env.TOKEN_SECRET, (err,user)=>
+        else
         {
-            //console.log(err)    
-            if (err)
-            callback({status:false,code:403})
-            
-            req.user = user
-            callback({status:true,code:200})
-        })
+            jwt.verify(token, process.env.TOKEN_SECRET, (err,tokendata)=>
+            {
+                //console.log(err)    
+                if (err)
+                    callback({status:false,code:403})
+                else
+                {                    
+                    req.user = tokendata.user
+                    callback({status:true,code:200})
+                }
+            })
+        }
     }
 }
 

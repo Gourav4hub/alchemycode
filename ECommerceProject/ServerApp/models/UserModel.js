@@ -12,6 +12,24 @@ class User
         otp : Number,
         isverify : Boolean
     });
+
+    getUser = (userid,callback)=>
+    {
+        var model = mongoose.model("user",this.userSchema,"user");
+        mongooseConnection(conn=>{
+            conn.once('open', function() 
+            {
+                var obj = model.findOne({_id:userid})
+                obj.exec((err,data)=>{
+                    conn.close()
+                    if(err)
+                        callback(false)
+                    else
+                        callback(data) 
+                });
+             })
+        })
+    }
     
     loginUser = (email,callback)=>
     {

@@ -10,7 +10,31 @@ const router = express.Router()
 //http://localhost:8989/user/verify
 router.get("/verify",(request,response)=>{
     console.log(request.query)
+    response.json({status:true})
 });
+
+// http://localhost:8989/user/updateProfile
+router.post("/updateProfile",(request,response)=>
+{
+  console.log(request.body)
+})
+
+// http://localhost:8989/user/getUser
+router.post("/getUser",(request,response)=>
+{
+   jwt.authenticateToken(request,(data)=>{    
+     if(data.status)
+     {
+        userModel.getUser(request.user,(userdata)=>
+        {
+          var token = jwt.generateAccessToken(request.user)
+          response.json({status:true,user:userdata,token:token})
+        })
+     }else{
+       response.json({status:false,code:data.code})
+     }
+   });
+})
 
 // http://localhost:8989/user/register
 router.post("/login",(request,response)=>

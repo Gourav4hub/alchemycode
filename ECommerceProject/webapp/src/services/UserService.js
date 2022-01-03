@@ -20,6 +20,27 @@ class UserService
             body : JSON.stringify(data)
         })
     }
+
+    getUser = (token)=>{
+        return fetch(`${packageJson.server}/user/getUser`,{
+            method : 'POST',
+            headers:{
+                "Content-Type" : "application/json",
+                "Authorization" : 'Bearer '.concat(token)
+            }
+        })
+    }
+
+    updateProfile = (data,token)=>{
+        return fetch(`${packageJson.server}/user/updateProfile`,{
+            method : 'POST',
+            headers:{
+                "Content-Type" : "application/json",
+                "Authorization" : 'Bearer '.concat(token)
+            },
+            body: JSON.stringify(data)
+        })
+    }
 }
 var obj = new UserService()
 export default obj;

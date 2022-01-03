@@ -8,6 +8,7 @@ import {Routes,Route} from 'react-router-dom'
 
 import * as actions from './appredux/actions/MasterAction'
 import Store from './appredux/store'
+import Profile from './profileComponent/Profile'
 class App extends React.Component
 {
   componentDidMount()
@@ -45,6 +46,7 @@ class App extends React.Component
         <Routes>
           <Route path="/" element={<Product/>}/>
           <Route path="/login" element={<Login/>}/>
+          <Route path="/profile" element={<Profile/>}/>
         </Routes>
      
         
