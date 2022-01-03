@@ -1,1 +1,7 @@
 <h2>Demo Component</h2>
+
+<h5 *ngFor="let x of num">
+    {{x}} : 
+    <span *ngIf="x%2==0">Even Number</span>
+    <span *ngIf="x%2!=0">Odd Number</span>
+</h5>

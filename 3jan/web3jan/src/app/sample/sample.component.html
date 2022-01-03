@@ -1,1 +1,13 @@
 <h2>Sample Component</h2>
+
+<input type="number" #t1 placeholder="First Number">&nbsp;
+<input type="number" #t2 placeholder="Second Number">&nbsp;
+
+<br><br>
+<b>Add Result : {{fnum+snum}}</b><br>
+<b>Sub Result : {{fnum-snum}}</b><br>
+<b>Mul Result : {{fnum*snum}}</b><br>
+<b>Div Result : {{fnum/snum}}</b><br>
+<b>Mod Result : {{fnum%snum}}</b><br>
+<br><br>
+<button (click)="process(t1,t2)">Calculate</button>
