@@ -1,17 +1,14 @@
 <h1>App Component</h1>
 
-<p>
-  {{msg}}
-</p>
-<input type='text' value="{{msg}}"> <br>
-<input type='text' [value]="msg"> <br>
-<input type='text' [(ngModel)]="msg"> <br>
-<hr>
-
 <form #frm="ngForm" (submit)="send(frm)">
     <input type='text' name="roll" ngModel placeholder="Roll">
     <input type='text' name="name" ngModel placeholder="Name">
     <input type='number' name="age" ngModel placeholder="Age">
     <button type='submit'>Send</button>
 </form>
+<hr>
+
+<app-student *ngFor="let ob of students" [student]="ob">
+
+</app-student>
 

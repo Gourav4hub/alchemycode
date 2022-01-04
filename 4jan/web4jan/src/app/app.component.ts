@@ -6,13 +6,13 @@ import { NgForm } from '@angular/forms';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-//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
+//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
 export class AppComponent
 {
-  public msg:String= "Hello All !"
+  public students:any = []
 
   public send(frm:NgForm)
   {
-    console.log(frm.value)
+    this.students.push(frm.value)
   }
 }
