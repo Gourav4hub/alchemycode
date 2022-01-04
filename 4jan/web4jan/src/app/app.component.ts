@@ -7,9 +7,14 @@ import { Component } from '@angular/core';
 })
 export class AppComponent
 {
-  public num = 10
+  public products:any = [];
 
-  change(){
-    this.num += 1
+  public add(name:any,price:any,company:any,image:any)
+  {
+      this.products.push({
+        name:name.value,
+        price:price.value*1,
+        company:company.value,
+        image:"assets/imgs/"+image.value})
   }
 }
