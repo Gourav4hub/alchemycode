@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -8,20 +9,10 @@ import { Component } from '@angular/core';
 //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
 export class AppComponent
 {
-  public products:any = [];
-  public productIndex:number = 0;
+  public msg:String= "Hello All !"
 
-  public deleteProduct(pid:number){
-    this.products = this.products.filter((prod:any)=>prod.pid!=pid)
-  }
-
-  public add(name:any,price:any,company:any,image:any)
+  public send(frm:NgForm)
   {
-      this.products.push({
-        pid : ++this.productIndex,
-        name:name.value,
-        price:price.value*1,
-        company:company.value,
-        image:"assets/imgs/"+image.value})
+    console.log(frm.value)
   }
 }
