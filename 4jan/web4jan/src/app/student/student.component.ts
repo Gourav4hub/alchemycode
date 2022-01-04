@@ -1,4 +1,4 @@
-import { Component, OnInit , Input} from '@angular/core';
+import { Component, OnInit , Input , Output, EventEmitter} from '@angular/core';
 
 @Component({
   selector: 'app-student',
@@ -8,7 +8,13 @@ import { Component, OnInit , Input} from '@angular/core';
 export class StudentComponent implements OnInit
 {
   @Input("student") ob:any;
+  @Output("delStud") deleteObj = new EventEmitter<String>()
   //@Input() student:any;
+
+  public delete(roll:String)
+  {
+    this.deleteObj.emit(roll)
+  }
 
   constructor() { }
 
