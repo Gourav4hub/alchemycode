@@ -1,0 +1,9 @@
+<h1>App component</h1>
+<b>Number {{num}} </b> &nbsp; <button (click)="change()">Change</button>
+
+<div [ngSwitch]="num%2==0">
+  <b *ngSwitchCase="true">Event Number</b>
+  <b *ngSwitchCase="false">Odd Number</b>
+</div>
+<hr>
+<img src="/assets/imgs/img1.jpg">
