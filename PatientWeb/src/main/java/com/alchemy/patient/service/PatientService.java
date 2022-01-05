@@ -17,7 +17,7 @@ public class PatientService
 	@Autowired
 	private PatientRepository patientRepository;
 	
-	public Patient saveUser(Patient patient) 
+	public Patient savePatient(Patient patient) 
 	{
 		try {
 			patientRepository.insert(patient);		
@@ -27,8 +27,38 @@ public class PatientService
 		}
 	}
 	
+	public Patient updatePatient(Patient patient) 
+	{
+		try {
+			patientRepository.save(patient);			
+			return patient;
+		}catch(Exception ex) {
+			System.out.println(ex);
+			return null;
+		}
+	}
 	
-	public List<Patient>  loadUsers() 
+	public Boolean deletePatient(Patient patient) 
+	{
+		try {
+			patientRepository.delete(patient);				
+			return true;
+		}catch(Exception ex) {
+			return false;
+		}
+	}
+	
+	public Patient get(String id) 
+	{
+		try {			
+			return patientRepository.findById(id).get();
+		}catch(Exception ex) {
+			return null;
+		}
+	}
+	
+	
+	public List<Patient>  loadPatients() 
 	{
 		try {
 			List<Patient> list =  patientRepository.findAll();
