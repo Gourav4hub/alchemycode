@@ -1,4 +1,16 @@
 <h2>Home Component</h2>
+
+<form #frm="ngForm" (submit)="save(frm)">
+    <input type='text' placeholder="Name" name="name" ngModel> &nbsp;
+    <input type='number' placeholder="Age" name="age" ngModel> &nbsp;
+    <select name='gender' ngModel>
+        <option value='male'>Male</option>
+        <option value='female'>FeMale</option>
+    </select>&nbsp;
+    <button type='submit'>Save</button>
+</form>
+
+<hr>
 <table align='center' cellpadding="10" cellspacing='5'>
     <tr>
         <th>S.No.</th>
@@ -6,6 +18,7 @@
         <th>Name</th>
         <th>Age</th>
         <th>Gender</th>
+        <th>Operation</th>
     </tr>
 
     <tr *ngFor="let pat of patients; let i = index">
@@ -14,5 +27,8 @@
         <td>{{pat.name}}</td>
         <td>{{pat.age}}</td>
         <td>{{pat.gender}}</td>
+        <th>
+            <button (click)="delPatient(pat.id)">Delete</button>
+        </th>
     </tr>
 </table>

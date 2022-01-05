@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { HttpClient } from '@angular/common/http';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,19 @@ export class HomeComponent implements OnInit
 
   constructor(private http:HttpClient) { 
 
+  }
+
+  save(frm:NgForm){
+    console.log(frm.value)
+    this.http.post("https://todearhemant.pythonanywhere.com/patient/api/patients/",frm.value).subscribe(data=>{
+        this.patients.push(data)
+    })
+  }
+
+  delPatient(pid:number){
+    this.http.delete(`https://todearhemant.pythonanywhere.com/patient/api/patients/${pid}/`).subscribe(data=>{
+      this.patients = this.patients.filter((pat:any)=>pat.id!=pid)
+    })
   }
 
   ngOnInit(): void 
