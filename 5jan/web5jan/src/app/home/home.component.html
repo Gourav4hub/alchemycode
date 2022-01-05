@@ -1,2 +1,18 @@
 <h2>Home Component</h2>
-<img src="assets/imgs/img1.jpg" [height]="200" [width]="220">
+<table align='center' cellpadding="10" cellspacing='5'>
+    <tr>
+        <th>S.No.</th>
+        <th>Patient Id</th>
+        <th>Name</th>
+        <th>Age</th>
+        <th>Gender</th>
+    </tr>
+
+    <tr *ngFor="let pat of patients; let i = index">
+        <td>{{i+1}}</td>
+        <td>{{pat.id}}</td>
+        <td>{{pat.name}}</td>
+        <td>{{pat.age}}</td>
+        <td>{{pat.gender}}</td>
+    </tr>
+</table>
