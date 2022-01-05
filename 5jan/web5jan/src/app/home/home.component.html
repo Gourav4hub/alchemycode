@@ -1,6 +1,6 @@
 <h2>Home Component</h2>
 
-<form #frm="ngForm" (submit)="save(frm)">
+<form #frm="ngForm" (submit)="save(frm)" *ngIf="editDetails.editstatus==false">
     <input type='text' placeholder="Name" name="name" ngModel> &nbsp;
     <input type='number' placeholder="Age" name="age" ngModel> &nbsp;
     <select name='gender' ngModel>
@@ -9,6 +9,17 @@
     </select>&nbsp;
     <button type='submit'>Save</button>
 </form>
+
+<form #frm="ngForm" (submit)="update(frm)" *ngIf="editDetails.editstatus==true">    
+    <input type='text' placeholder="Name" name="name" [ngModel]="editDetails.editpatient.name"> &nbsp;
+    <input type='number' placeholder="Age" name="age" [ngModel]="editDetails.editpatient.age"> &nbsp;
+    <select name='gender' [ngModel]="editDetails.editpatient.gender">
+        <option value='male'>Male</option>
+        <option value='female'>FeMale</option>
+    </select>&nbsp;
+    <button type='submit'>Update</button>
+</form>
+
 
 <hr>
 <table align='center' cellpadding="10" cellspacing='5'>
@@ -29,6 +40,8 @@
         <td>{{pat.gender}}</td>
         <th>
             <button (click)="delPatient(pat.id)">Delete</button>
+            &nbsp;
+            <button (click)="editPatient(pat)">Edit</button>
         </th>
     </tr>
 </table>

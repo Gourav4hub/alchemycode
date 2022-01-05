@@ -11,9 +11,33 @@ import { NgForm } from '@angular/forms';
 export class HomeComponent implements OnInit 
 {
   public patients:any = [];
+  public editDetails:any = {
+    editpatient : undefined,
+    editstatus : false
+  }
 
   constructor(private http:HttpClient) { 
 
+  }
+
+  update(frm:NgForm){
+    console.log(frm.value)
+    this.http.put(`https://todearhemant.pythonanywhere.com/patient/api/patients/${this.editDetails.editpatient.id}/`,frm.value).subscribe(data=>{
+      console.log(data)
+      this.patients = this.patients.map((ob:any)=>ob.id==this.editDetails.editpatient.id?data:ob)
+      this.editDetails= {
+        editpatient : undefined,
+        editstatus : false
+      }
+    })
+  }
+
+  editPatient(patient:any)
+  {
+    this.editDetails = {
+      editpatient : patient,
+      editstatus : true
+    }
   }
 
   save(frm:NgForm){
