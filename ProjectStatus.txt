@@ -1,0 +1,65 @@
+Group 1 : Quickr
+
+	1. create spring boot project
+	2. Category : Add Category , List Category
+	3. User : Register , Login , Add Product
+	
+Group 2 : Medico
+
+	1. create spring boot project
+	2. Hospital : Register , Login
+	3. Doctor : Add Doctors , List Doctors
+	
+Group 3 : DealsBazaar
+
+	1. create spring boot project
+	2. Category : Add Category , List Category
+	3. User : Register , Login , Add Product
+	
+Group 4 : ChatBuddy
+
+	1. create spring boot project
+	2. User : Register , Login
+	3. Group : Add Group , List Group
+	
+Group 5 : FriendsHub
+
+	1. create spring boot project
+	2. User : Register , Login
+	3. Request : Friend Request , Request Response
+
+Group 6 : EMarket : Electronics
+
+	1. create spring boot project
+	2. Category : Add Category , List Category
+	3. Product : Add Product, List Product
+
+
+Group 7 : CollegeQuera
+
+	1. create spring boot project
+	2. User : Register , Login
+	
+	**********************************************************
+	
+		Project 1 : Spring Boot : For APIs
+		Project 2 : Angular : Admin Panel
+		Project 3 : React : User Panel
+		
+		Aman deep : React
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
+	
