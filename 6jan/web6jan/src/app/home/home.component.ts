@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
 
 @Component({
@@ -20,10 +20,13 @@ export class HomeComponent implements OnInit
 
   }
 
-  update(frm:NgForm){
-    console.log(frm.value)
-    this.http.put(`https://todearhemant.pythonanywhere.com/patient/api/patients/${this.editDetails.editpatient.id}/`,frm.value).subscribe(data=>{
-      console.log(data)
+  update(frm:NgForm)
+  {
+    var ob = frm.value
+    ob.patientId = this.editDetails.editpatient.patientId
+    console.log(ob)
+    this.http.put(`http://localhost:8080/patient/update`,ob).subscribe(data=>
+    {     
       this.patients = this.patients.map((ob:any)=>ob.id==this.editDetails.editpatient.id?data:ob)
       this.editDetails= {
         editpatient : undefined,
@@ -48,7 +51,14 @@ export class HomeComponent implements OnInit
   }
 
   delPatient(pid:String){
-    this.http.delete(`http://localhost:8080/patient/delete/${pid}`).pipe();
+    this.http.delete(`http://localhost:8080/patient/delete/${pid}`,{observe: 'response'}).subscribe(data=>{
+        console.log(data.status)
+        if(data.status==200){
+          this.patients = this.patients.filter((prod:any)=>prod.patientId!=pid)
+        }else{
+          alert("Not Deleted !")
+        }
+    })
   }
 
   ngOnInit(): void 
