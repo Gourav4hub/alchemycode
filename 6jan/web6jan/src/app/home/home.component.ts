@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
-import { HttpClient, HttpResponse } from '@angular/common/http';
 import { NgForm } from '@angular/forms';
-
+import PatientService from '../patient.service'
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -16,18 +15,16 @@ export class HomeComponent implements OnInit
     editstatus : false
   }
 
-  constructor(private http:HttpClient) { 
-
+  constructor(private patientService:PatientService) { 
   }
 
   update(frm:NgForm)
   {
     var ob = frm.value
-    ob.patientId = this.editDetails.editpatient.patientId
-    console.log(ob)
-    this.http.put(`http://localhost:8080/patient/update`,ob).subscribe(data=>
+    ob.patientId = this.editDetails.editpatient.patientId    
+    this.patientService.updatePatient(ob).subscribe(data=>
     {     
-      this.patients = this.patients.map((ob:any)=>ob.id==this.editDetails.editpatient.id?data:ob)
+      this.patients = this.patients.map((ob:any)=>ob.patientId==this.editDetails.editpatient.patientId?data:ob)
       this.editDetails= {
         editpatient : undefined,
         editstatus : false
@@ -45,13 +42,13 @@ export class HomeComponent implements OnInit
 
   save(frm:NgForm){
     console.log(frm.value)
-    this.http.post("http://localhost:8080/patient/save",frm.value).subscribe(data=>{
+    this.patientService.savePatient(frm.value).subscribe(data=>{
         this.patients.push(data)
     })
   }
 
   delPatient(pid:String){
-    this.http.delete(`http://localhost:8080/patient/delete/${pid}`,{observe: 'response'}).subscribe(data=>{
+    this.patientService.deletePatient(pid).subscribe(data=>{
         console.log(data.status)
         if(data.status==200){
           this.patients = this.patients.filter((prod:any)=>prod.patientId!=pid)
@@ -63,7 +60,7 @@ export class HomeComponent implements OnInit
 
   ngOnInit(): void 
   {
-    this.http.get("http://localhost:8080/patient/load").subscribe(data=>{
+    this.patientService.getPatients().subscribe((data:any)=>{
       this.patients = data
     });
   }
