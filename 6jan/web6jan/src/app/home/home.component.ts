@@ -42,15 +42,13 @@ export class HomeComponent implements OnInit
 
   save(frm:NgForm){
     console.log(frm.value)
-    this.http.post("https://todearhemant.pythonanywhere.com/patient/api/patients/",frm.value).subscribe(data=>{
+    this.http.post("http://localhost:8080/patient/save",frm.value).subscribe(data=>{
         this.patients.push(data)
     })
   }
 
-  delPatient(pid:number){
-    this.http.delete(`https://todearhemant.pythonanywhere.com/patient/api/patients/${pid}/`).subscribe(data=>{
-      this.patients = this.patients.filter((pat:any)=>pat.id!=pid)
-    })
+  delPatient(pid:String){
+    this.http.delete(`http://localhost:8080/patient/delete/${pid}`).pipe();
   }
 
   ngOnInit(): void 

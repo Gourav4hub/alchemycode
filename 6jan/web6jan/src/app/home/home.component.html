@@ -1,9 +1,10 @@
 <h2>Home Component</h2>
 
 <form #frm="ngForm" (submit)="save(frm)" *ngIf="editDetails.editstatus==false">
-    <input type='text' placeholder="Name" name="name" ngModel> &nbsp;
-    <input type='number' placeholder="Age" name="age" ngModel> &nbsp;
-    <select name='gender' ngModel>
+    <input type='text' placeholder="Name" name="patientName" ngModel> &nbsp;
+    <input type='text' placeholder="Phone" name="patientPhone" ngModel> &nbsp;
+    <input type='number' placeholder="Age" name="patientAge" ngModel> &nbsp;
+    <select name='patientGender' ngModel>
         <option value='male'>Male</option>
         <option value='female'>FeMale</option>
     </select>&nbsp;
@@ -11,9 +12,10 @@
 </form>
 
 <form #frm="ngForm" (submit)="update(frm)" *ngIf="editDetails.editstatus==true">    
-    <input type='text' placeholder="Name" name="name" [ngModel]="editDetails.editpatient.name"> &nbsp;
-    <input type='number' placeholder="Age" name="age" [ngModel]="editDetails.editpatient.age"> &nbsp;
-    <select name='gender' [ngModel]="editDetails.editpatient.gender">
+    <input type='text' placeholder="Name" name="patientName" [ngModel]="editDetails.editpatient.patientName"> &nbsp;
+    <input type='text' placeholder="Phone" name="patientPhone" [ngModel]="editDetails.editpatient.patientPhone"> &nbsp;
+    <input type='number' placeholder="Age" name="patientAge" [ngModel]="editDetails.editpatient.patientAge"> &nbsp;
+    <select name='gender' [ngModel]="editDetails.editpatient.patientGender">
         <option value='male'>Male</option>
         <option value='female'>FeMale</option>
     </select>&nbsp;
@@ -26,6 +28,7 @@
     <tr>
         <th>S.No.</th>        
         <th>Name</th>
+        <th>Phone</th>
         <th>Age</th>
         <th>Gender</th>
         <th>Operation</th>
@@ -34,8 +37,9 @@
     <tr *ngFor="let pat of patients; let i = index">
         <td>{{i+1}}</td>        
         <td>{{pat.patientName}}</td>
+        <td>{{pat.patientPhone}}</td>
         <td>{{pat.patientAge}}</td>
-        <td>{{pat.patientgender}}</td>
+        <td>{{pat.patientGender}}</td>
         <th>
             <button (click)="delPatient(pat.patientId)">Delete</button>
             &nbsp;
