@@ -2,7 +2,11 @@ package com.alchemy.patient.controller;
 
 
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,12 +37,34 @@ public class PatientController
 	private PatientService patientService;
 	
 	@PostMapping("/uploadImage")
-	public String uploadPatient(@RequestParam String pid,
+	public ResponseEntity uploadPatient(@RequestParam String pid,
 			@RequestParam MultipartFile imageFile) 
 	{
+		String uploadDir = "/home/gaurav/Desktop/Alchemy/uploadPatientImages";
 		System.out.println(pid);
-		System.out.println(imageFile);
-		return "";
+		try {
+			byte bytes[] = imageFile.getBytes();
+			String fileName = imageFile.getOriginalFilename();
+			String ext = fileName.substring(fileName.lastIndexOf("."));
+			
+			fileName = UUID.randomUUID().toString()+ext;
+			
+//			System.out.println(fileName);
+//			System.out.println(bytes.length);
+			File file = new File(uploadDir,fileName);
+			FileOutputStream fos = new FileOutputStream(file);
+			fos.write(bytes);
+			fos.close();
+			
+			Patient patient = patientService.get(pid);
+			patient.setPatientImage(file.getAbsolutePath());
+			patientService.updatePatient(patient);
+			
+		} catch (IOException e) {
+			System.out.println(e.getMessage());
+			return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);	
+		}
+		return new ResponseEntity<>(HttpStatus.OK);	
 	}
 	
 	@PostMapping("/save")

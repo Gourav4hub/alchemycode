@@ -19,9 +19,15 @@ public class Patient
 	private String patientPhone;
 	private Integer patientAge;
 	private String patientGender;
+	private String patientImage;
 	
 	
-	
+	public void setPatientImage(String patientImage) {
+		this.patientImage = patientImage;
+	}
+	public String getPatientImage() {
+		return patientImage;
+	}
 	
 	public String getPatientId() {
 		return patientId;
