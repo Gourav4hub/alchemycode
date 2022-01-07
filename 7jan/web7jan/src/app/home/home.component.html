@@ -42,7 +42,7 @@
         <td>{{pat.patientAge}}</td>
         <td>{{pat.patientGender}}</td>
         <th>
-            <app-image [patid]="pat.patientId" [image]="pat.patientImage"></app-image>
+            <app-image [patid]="pat.patientId" [image]="pat.patientImage" (setImage)="setImageIntoPatient($event)"></app-image>
         </th>
         <th>
             <button (click)="delPatient(pat.patientId)">Delete</button>

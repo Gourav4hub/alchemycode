@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input , Output, EventEmitter} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import PatientService from '../patient.service';
+
 
 @Component({
   selector: 'app-image',
@@ -13,6 +14,8 @@ export class ImageComponent implements OnInit
   @Input("patid") patId:string="";
   @Input("image") patImage:string="";
 
+  @Output("setImage") sendImage = new EventEmitter()
+
   public patientBase64Image:String = '';
 
   public selectedFile:any;
@@ -22,6 +25,16 @@ export class ImageComponent implements OnInit
     this.selectedFile = undefined
   }
 
+  ngOnChanges(){
+    if(this.patImage!=undefined)
+    {
+       this.patientService.loadImage(this.patImage).subscribe((data:any)=>{
+          if(data.status){
+              this.patientBase64Image = data.imageBase64
+          }
+       })
+    }
+  }
   ngOnInit(): void {    
     if(this.patImage!=undefined)
     {
@@ -53,6 +66,7 @@ export class ImageComponent implements OnInit
         .subscribe((data:any) => {
             if(data.status){
               // data.imagePath
+              this.sendImage.emit({pid:this.patId,path:data.imagePath})
             }
         });
     }

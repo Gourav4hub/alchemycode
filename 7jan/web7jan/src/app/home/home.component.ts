@@ -62,6 +62,22 @@ export class HomeComponent implements OnInit
   {
     this.patientService.getPatients().subscribe((data:any)=>{
       this.patients = data
+      console.log(this.patients)
     });
+  }
+
+  setImageIntoPatient(data:any)
+  {
+    //console.log(this.patients)
+    //console.log(data)
+    this.patients = this.patients.map((prod:any)=>{
+      if(prod.patientId==data.pid)
+      {
+        prod.patientImage = data.path
+        return prod;
+      }else
+        return prod
+    })
+    console.log(this.patients)
   }
 }
