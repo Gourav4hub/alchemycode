@@ -3,8 +3,10 @@ package com.alchemy.patient.controller;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alchemy.patient.model.Patient;
 import com.alchemy.patient.repository.PatientRepository;
-import com.alchemy.patient.response.ResponseData;
+import com.alchemy.patient.response.ImageResponseData;
 import com.alchemy.patient.service.PatientService;
 
 @RestController
@@ -35,6 +37,33 @@ public class PatientController
 {
 	@Autowired
 	private PatientService patientService;
+	
+	@PostMapping("/getImage")
+	public ResponseEntity getImage(@RequestParam String imagePath) 
+	{
+		try {
+		File file = new File(imagePath);
+
+     	FileInputStream fis = new FileInputStream(file);            
+        int size = fis.available();
+        byte arr[] = new byte[size];
+        
+        fis.read(arr);
+        fis.close();
+        byte[] encoded = Base64.getEncoder().encode(arr);
+       
+        String fileStr = new String(encoded);
+        
+        ImageResponseData res = new ImageResponseData();
+        res.setImageBase64(fileStr);
+        res.setStatus(true);
+        return ResponseEntity.ok(res);
+		}catch(Exception ex) {
+			ImageResponseData res = new ImageResponseData();	        
+	        res.setStatus(false);
+	        return ResponseEntity.ok(res);
+		}
+	}
 	
 	@PostMapping("/uploadImage")
 	public ResponseEntity uploadPatient(@RequestParam String pid,
@@ -60,11 +89,17 @@ public class PatientController
 			patient.setPatientImage(file.getAbsolutePath());
 			patientService.updatePatient(patient);
 			
+			ImageResponseData res = new ImageResponseData();
+	        res.setImagePath(file.getAbsolutePath());
+	        res.setStatus(true);
+	        return ResponseEntity.ok(res);
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
-			return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);	
+			ImageResponseData res = new ImageResponseData();	        
+	        res.setStatus(false);
+	        return ResponseEntity.ok(res);
 		}
-		return new ResponseEntity<>(HttpStatus.OK);	
+		
 	}
 	
 	@PostMapping("/save")

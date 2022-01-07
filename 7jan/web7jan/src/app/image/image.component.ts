@@ -1,5 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+
+import PatientService from '../patient.service';
+
 @Component({
   selector: 'app-image',
   templateUrl: './image.component.html',
@@ -8,17 +11,26 @@ import { HttpClient } from '@angular/common/http';
 export class ImageComponent implements OnInit 
 {
   @Input("patid") patId:string="";
-  @Input("image") patImage:String="";
+  @Input("image") patImage:string="";
+
+  public patientBase64Image:String = '';
 
   public selectedFile:any;
 
-  constructor(private http:HttpClient) { 
+  constructor(private http:HttpClient,
+    private patientService:PatientService) { 
     this.selectedFile = undefined
   }
 
-  ngOnInit(): void {
-    console.log(this.patId)
-    console.log(this.patImage)
+  ngOnInit(): void {    
+    if(this.patImage!=undefined)
+    {
+       this.patientService.loadImage(this.patImage).subscribe((data:any)=>{
+          if(data.status){
+              this.patientBase64Image = data.imageBase64
+          }
+       })
+    }
   }
 
   public setImage(event:any){
@@ -37,13 +49,11 @@ export class ImageComponent implements OnInit
       uploadImageData.append("pid",this.patId);
     
      
-      this.http.post("http://localhost:8080/patient/uploadImage", uploadImageData, { observe: 'response' })
-        .subscribe((response) => {
-          if (response.status === 200) {
-            
-          } else {
-            
-          }
+      this.http.post("http://localhost:8080/patient/uploadImage", uploadImageData)
+        .subscribe((data:any) => {
+            if(data.status){
+              // data.imagePath
+            }
         });
     }
   }

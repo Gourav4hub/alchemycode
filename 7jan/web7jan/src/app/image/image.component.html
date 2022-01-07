@@ -1,5 +1,8 @@
 <div>
-    <img *ngIf="patImage!=undefined" [src]="" [height]="100" [width]="100">
+    <img *ngIf="patImage!=undefined" src="data:image/jpeg;base64,{{patientBase64Image}}" [height]="100" [width]="100">
+
+    <img *ngIf="patImage==undefined" src="assets/imgs/patient.jpeg" [height]="100" [width]="100">
+   
     <br>
     <input type="file" (change)="setImage($event)">
     <button (click)="upload()">Upload</button>

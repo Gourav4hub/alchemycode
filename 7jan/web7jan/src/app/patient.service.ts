@@ -30,4 +30,11 @@ export default class PatientService
   {
     return this.http.put(`${server}/patient/update`,ob)
   }
+
+  public loadImage(imagePath:string) : Observable<any>
+  {
+    const formData = new FormData();
+    formData.append("imagePath",imagePath);
+    return this.http.post(`${server}/patient/getImage`,formData)
+  }
 }
