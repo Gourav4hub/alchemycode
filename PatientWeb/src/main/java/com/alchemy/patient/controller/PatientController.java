@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alchemy.patient.model.Patient;
 import com.alchemy.patient.repository.PatientRepository;
@@ -29,6 +31,15 @@ public class PatientController
 {
 	@Autowired
 	private PatientService patientService;
+	
+	@PostMapping("/uploadImage")
+	public String uploadPatient(@RequestParam String pid,
+			@RequestParam MultipartFile imageFile) 
+	{
+		System.out.println(pid);
+		System.out.println(imageFile);
+		return "";
+	}
 	
 	@PostMapping("/save")
 	public ResponseEntity savePatient(@RequestBody Patient patient) 

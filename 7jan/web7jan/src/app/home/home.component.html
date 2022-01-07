@@ -1,0 +1,53 @@
+<h2>Home Component</h2>
+
+<form #frm="ngForm" (submit)="save(frm)" *ngIf="editDetails.editstatus==false">
+    <input type='text' placeholder="Name" name="patientName" ngModel> &nbsp;
+    <input type='text' placeholder="Phone" name="patientPhone" ngModel> &nbsp;
+    <input type='number' placeholder="Age" name="patientAge" ngModel> &nbsp;
+    <select name='patientGender' ngModel>
+        <option value='male'>Male</option>
+        <option value='female'>FeMale</option>
+    </select>&nbsp;
+    <button type='submit'>Save</button>
+</form>
+
+<form #frm="ngForm" (submit)="update(frm)" *ngIf="editDetails.editstatus==true">    
+    <input type='text' placeholder="Name" name="patientName" [ngModel]="editDetails.editpatient.patientName"> &nbsp;
+    <input type='text' placeholder="Phone" name="patientPhone" [ngModel]="editDetails.editpatient.patientPhone"> &nbsp;
+    <input type='number' placeholder="Age" name="patientAge" [ngModel]="editDetails.editpatient.patientAge"> &nbsp;
+    <select name='patientGender' [ngModel]="editDetails.editpatient.patientGender">
+        <option value='male'>Male</option>
+        <option value='female'>FeMale</option>
+    </select>&nbsp;
+    <button type='submit'>Update</button>
+</form>
+
+
+<hr>
+<table align='center' cellpadding="10" cellspacing='5'>
+    <tr>
+        <th>S.No.</th>        
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Age</th>
+        <th>Gender</th>
+        <th>Image</th>
+        <th>Operation</th>
+    </tr>
+
+    <tr *ngFor="let pat of patients; let i = index">
+        <td>{{i+1}}</td>        
+        <td>{{pat.patientName}}</td>
+        <td>{{pat.patientPhone}}</td>
+        <td>{{pat.patientAge}}</td>
+        <td>{{pat.patientGender}}</td>
+        <th>
+            <app-image [patid]="pat.patientId" [image]="pat.patientImage"></app-image>
+        </th>
+        <th>
+            <button (click)="delPatient(pat.patientId)">Delete</button>
+            &nbsp;
+            <button (click)="editPatient(pat)">Edit</button>
+        </th>
+    </tr>
+</table>

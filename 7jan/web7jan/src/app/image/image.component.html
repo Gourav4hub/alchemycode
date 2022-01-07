@@ -1,0 +1,7 @@
+<div>
+    <img *ngIf="patImage!=undefined" [src]="" [height]="100" [width]="100">
+    <br>
+    <input type="file" (change)="setImage($event)">
+    <button (click)="upload()">Upload</button>
+   
+</div>
