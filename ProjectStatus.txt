@@ -46,7 +46,7 @@ Group 7 : CollegeQuera
 		Project 2 : Angular : Admin Panel
 		Project 3 : React : User Panel
 		
-		Aman deep : React
+		
 		
 		
 	

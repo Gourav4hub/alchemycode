@@ -143,6 +143,7 @@ public class PatientController
 	@GetMapping("/load")
 	public ResponseEntity loadPatients() 
 	{
+		System.out.println("Chalalalalal");
 		List<Patient> list =  patientService.loadPatients();
 		return ResponseEntity.ok(list);
 	}
