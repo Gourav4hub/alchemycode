@@ -1,5 +1,5 @@
 {
-  "server" : "http://localhost:8989",
+  "server": "http://localhost:8989",
   "name": "adminpanel",
   "version": "0.1.0",
   "private": true,

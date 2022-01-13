@@ -5,7 +5,7 @@ const upload = require('express-fileupload')
 
 const categoryRouter = require('./routers/CategoryRouter')
 const brandRouter = require('./routers/BrandRouter')
-const productRouter = require('./routers/productRouter')
+const productRouter = require('./routers/ProductRouter')
 const userRouter = require('./routers/UserRouter')
 const app = express()
 

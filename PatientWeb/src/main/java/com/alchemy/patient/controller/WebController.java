@@ -2,10 +2,15 @@ package com.alchemy.patient.controller;
 
 import java.util.Objects;
 
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.DisabledException;
@@ -29,6 +34,9 @@ import com.alchemy.patient.service.SystemUserService;
 public class WebController 
 {
 	@Autowired
+    private JavaMailSender javaMailSender;
+	
+	@Autowired
 	private SystemUserService userService;
 
 	@Autowired
@@ -47,11 +55,30 @@ public class WebController
 	public ResponseEntity saveUser(@RequestBody SystemUser user) 
 	{
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		SendVerifyMail(user.getName(),user.getEmail(),121);
 		SystemUser newUser = userService.saveUser(user);
 		if (newUser == null)
 			return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 		else
 			return ResponseEntity.ok(newUser);
+	}
+	
+	private boolean SendVerifyMail(String name,String email,int otp) 
+	{
+		try {
+			SimpleMailMessage msg = new SimpleMailMessage();
+			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+			MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage, false, "UTF-8");
+	        messageHelper.setFrom("justsample4mail@gmail.com");
+	        messageHelper.setTo(email);
+	        messageHelper.setSubject("Verification Mail from PatientWeb");
+	        messageHelper.setText("<b>Hello</b>", true);
+	        javaMailSender.send(mimeMessage);
+			return true;
+		}catch(Exception ex) {
+			System.out.println(ex.getMessage());
+			return false;
+		}
 	}
 
 	@PostMapping("/login")
