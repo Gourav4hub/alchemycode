@@ -2,6 +2,7 @@ package com.alchemy.patient.patientvisit.resources;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.alchemy.patient.patientvisit.model.Patient;
 import com.alchemy.patient.patientvisit.model.PatientVisit;
+import com.alchemy.patient.patientvisit.response.VisitResponse;
 import com.alchemy.patient.patientvisit.service.VisitService;
 
 @RestController
@@ -23,24 +25,17 @@ public class VisitController
 	@Autowired
 	private VisitService visitService;
 	
-	@PostMapping("/save/{patientId}")
-	public ResponseEntity saveVisit(@RequestBody PatientVisit visit, 
-			@PathVariable String patientId) 
-	{
-		visit.setVisitDate(new Date());
-		RestTemplate restTemplate = new RestTemplate();		
-		String url = "http://localhost:8081/patient/get/"+patientId;
-		Patient ob = restTemplate.postForEntity(url, null, Patient.class).getBody();
-		
-		if(ob.getVisitList()==null) 
-		{
-			ArrayList<PatientVisit> list = new ArrayList<PatientVisit>();
-			list.add(visit);
-			ob.setVisitList(list);
-		}else {
-			ob.getVisitList().add(visit);
-		}		
-		visitService.saveVisit(ob);
+	@PostMapping("/save")
+	public ResponseEntity saveVisit(@RequestBody PatientVisit visit) 
+	{			
+		visitService.saveVisit(visit);
 		return ResponseEntity.ok(visit);
+	}
+	
+	@PostMapping("/userVisit/{patientId}")
+	public VisitResponse list(@PathVariable String patientId)
+	{
+		List<PatientVisit> visitList = visitService.list(patientId);
+		return new VisitResponse(visitList);
 	}
 }

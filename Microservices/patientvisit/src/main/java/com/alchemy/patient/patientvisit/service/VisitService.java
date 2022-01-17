@@ -1,5 +1,7 @@
 package com.alchemy.patient.patientvisit.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,21 +11,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.alchemy.patient.patientvisit.model.Patient;
-import com.alchemy.patient.patientvisit.repository.PatientRepository;
+import com.alchemy.patient.patientvisit.model.PatientVisit;
+import com.alchemy.patient.patientvisit.repository.PatientVisitRepository;
 
 @Service
 public class VisitService 
 {
 	@Autowired
-	private PatientRepository patientRepository;
+	private PatientVisitRepository patientVisitRepository;
 	
-	public boolean saveVisit(Patient patient) 
+	public boolean saveVisit(PatientVisit visit) 
 	{
 		try {
-			patientRepository.save(patient);
+			visit.setVisitDate(new Date());			
+			patientVisitRepository.save(visit);
 			return true;
 		}catch(Exception ex) {
 			return false;
 		}
+	}
+
+	public List<PatientVisit> list(String patientId) 
+	{
+		return patientVisitRepository.findByPatientId(patientId);		
 	}
 }

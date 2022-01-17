@@ -2,9 +2,13 @@ package com.alchemy.patient.patientvisit.model;
 
 import java.util.Date;
 
+import org.springframework.data.annotation.Id;
+
 public class PatientVisit 
 {
+	@Id
 	private String visitId;
+	private String patientId;
 	private Date visitDate;
 	private String type; // testing,consultancy
 	
@@ -12,14 +16,13 @@ public class PatientVisit
 		// TODO Auto-generated constructor stub
 	}
 	
-	public PatientVisit(String visitId, Date visitDate, String type) {
-		super();
-		this.visitId = visitId;
-		this.visitDate = visitDate;
-		this.type = type;
+	public void setPatientId(String patientId) {
+		this.patientId = patientId;
 	}
-
-
+	
+	public String getPatientId() {
+		return patientId;
+	}
 
 	public String getVisitId() {
 		return visitId;

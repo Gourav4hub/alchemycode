@@ -23,11 +23,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alchemy.patient.patientweb.model.Patient;
+import com.alchemy.patient.patientweb.model.PatientVisit;
 import com.alchemy.patient.patientweb.repository.PatientRepository;
 import com.alchemy.patient.patientweb.response.ImageResponseData;
+import com.alchemy.patient.patientweb.response.VisitResponse;
 import com.alchemy.patient.patientweb.service.PatientService;
 
 @RestController
@@ -149,7 +152,14 @@ public class PatientController
 	@GetMapping("/load")
 	public ResponseEntity loadPatients() 
 	{		
+		RestTemplate template = new RestTemplate();
 		List<Patient> list =  patientService.loadPatients();
+		for(Patient pat : list) 
+		{
+			String url = "http://localhost:8082/visit/userVisit/"+pat.getPatientId();
+			VisitResponse visitResponse = template.postForEntity(url, null,VisitResponse.class).getBody();
+			pat.setVisitList(visitResponse.getVisitList());
+		}
 		return ResponseEntity.ok(list);
 	}
 }
