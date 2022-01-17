@@ -1,4 +1,4 @@
-package com.alchemy.patient.patientweb.model;
+package com.alchemy.patient.patientvisit.model;
 
 import java.util.List;
 

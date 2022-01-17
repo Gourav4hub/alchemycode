@@ -140,6 +140,12 @@ public class PatientController
 		}
 	}
 	
+	@PostMapping("/get/{patientId}")
+	public Patient getPatient(@PathVariable String patientId) 
+	{
+		return patientService.get(patientId);
+	}
+	
 	@GetMapping("/load")
 	public ResponseEntity loadPatients() 
 	{		
