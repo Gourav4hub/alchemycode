@@ -7,8 +7,10 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -40,6 +42,9 @@ public class PatientController
 {
 	@Autowired
 	private PatientService patientService;
+	
+	@Autowired
+	private RestTemplate template;
 	
 	@PostMapping("/getImage")
 	public ResponseEntity getImage(@RequestParam String imagePath) 
@@ -151,15 +156,23 @@ public class PatientController
 	
 	@GetMapping("/load")
 	public ResponseEntity loadPatients() 
-	{		
-		RestTemplate template = new RestTemplate();
-		List<Patient> list =  patientService.loadPatients();
-		for(Patient pat : list) 
+	{	
+		List<Patient> list = patientService.loadPatients().stream().map((Patient pat)->
 		{
 			String url = "http://localhost:8082/visit/userVisit/"+pat.getPatientId();
 			VisitResponse visitResponse = template.postForEntity(url, null,VisitResponse.class).getBody();
 			pat.setVisitList(visitResponse.getVisitList());
-		}
+			return pat;
+		}).collect(Collectors.toList());
+		
+		
+//		List<Patient> list =  patientService.loadPatients();
+//		for(Patient pat : list) 
+//		{
+//			String url = "http://localhost:8082/visit/userVisit/"+pat.getPatientId();
+//			VisitResponse visitResponse = template.postForEntity(url, null,VisitResponse.class).getBody();
+//			pat.setVisitList(visitResponse.getVisitList());
+//		}
 		return ResponseEntity.ok(list);
 	}
 }

@@ -1,6 +1,7 @@
 package com.alchemy.patient.patientvisit.model;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.annotation.Id;
 
@@ -11,9 +12,17 @@ public class PatientVisit
 	private String patientId;
 	private Date visitDate;
 	private String type; // testing,consultancy
+	private List<PatientTest> testList;
 	
 	public PatientVisit() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void setTestList(List<PatientTest> testList) {
+		this.testList = testList;
+	}
+	public List<PatientTest> getTestList() {
+		return testList;
 	}
 	
 	public void setPatientId(String patientId) {
