@@ -159,20 +159,12 @@ public class PatientController
 	{	
 		List<Patient> list = patientService.loadPatients().stream().map((Patient pat)->
 		{
-			String url = "http://localhost:8082/visit/userVisit/"+pat.getPatientId();
+			String url = "http://patientvisit/visit/userVisit/"+pat.getPatientId();
 			VisitResponse visitResponse = template.postForEntity(url, null,VisitResponse.class).getBody();
 			pat.setVisitList(visitResponse.getVisitList());
 			return pat;
 		}).collect(Collectors.toList());
-		
-		
-//		List<Patient> list =  patientService.loadPatients();
-//		for(Patient pat : list) 
-//		{
-//			String url = "http://localhost:8082/visit/userVisit/"+pat.getPatientId();
-//			VisitResponse visitResponse = template.postForEntity(url, null,VisitResponse.class).getBody();
-//			pat.setVisitList(visitResponse.getVisitList());
-//		}
+
 		return ResponseEntity.ok(list);
 	}
 }

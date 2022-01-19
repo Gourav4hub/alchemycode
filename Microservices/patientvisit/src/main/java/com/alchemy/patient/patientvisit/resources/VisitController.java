@@ -43,7 +43,7 @@ public class VisitController
 	{
 		List<PatientVisit> visitList = visitService.list(patientId).stream().map((PatientVisit visit)->
 		{
-			String url = "http://localhost:8083/test/visitTest/"+visit.getVisitId();
+			String url = "http://patienttest/test/visitTest/"+visit.getVisitId();
 			TestResponse response = template.postForEntity(url, null, TestResponse.class).getBody();
 			visit.setTestList(response.getTestList());
 			return visit;
