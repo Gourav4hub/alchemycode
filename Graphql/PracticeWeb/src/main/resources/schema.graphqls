@@ -1,0 +1,18 @@
+schema {
+	query : Query
+}
+
+type Query {
+   patients(city: String): [Patient]
+   patientByGender(gender:String) : [Patient]
+}
+
+type Patient {
+	patientId : ID
+	patientName : String
+	patientPhone : String
+	patientAge : Int
+	patientGender : String
+	patientCity : String
+}
+
